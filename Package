@@ -1,0 +1,42 @@
+# HTML drop down menu object that return selections with the name sel_field by default.
+# Options 
+html.selectfield <- function(options, rows=4, name="sel_field") {
+  return <- paste0("<select name=", name, "size=\"", rows, "\">")
+  for (i in 1:length(options)) return=paste0(return, "<option value=", i,">",options[i],"</option>")
+  paste0(return, "</select>")
+}
+
+# Concact a vector automatically naming values when names are not identified
+cc <- function(...) {
+  CALL <- match.call(expand.dots = FALSE)$...
+  no.name <- names(CALL)==""
+  names(CALL)[no.name]=CALL[no.name]
+  for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[i] <- get(toString(CALL[i])))
+  CALL
+}
+cc(a=3,b=3,aa)
+
+# Concact a list naming elements from names of elements when names are not identified
+ll <- function(...) {
+  CALL <- as.list(match.call(expand.dots = FALSE)$...)
+  no.name <- names(CALL)==""
+  names(CALL)[no.name]=CALL[no.name]
+  for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[[i]] <- get(toString(CALL[i])))
+  CALL
+}
+ll(a=3,b=3,aa)
+
+# A wrapper for inserting values into a MySQL table.
+rconcerto.tinsert <- function(table, param, dbname=concerto$db$name) {
+  command <- sprintf("INSERT INTO `%s`.`%s` SET ", dbname, table)
+  arglist <- NULL
+  for (i in 1:length(param)) arglist[i] <- sprintf("`%s`='%s'", names(param)[i], param[i])
+  concerto.table.query(sql=paste(command, paste(arglist, collapse=",")))
+}
+
+# A wrapper for selecting (loading values from) a my SQL table.
+rconcerto.tselect <- function(table, order="", dbname=concerto$db$name) {
+  command <- sprintf("SELECT * FROM `%s`.`%s`", dbname, table)
+  if (order!="") order <- sprintf(" ORDER BY `%s` ASC", order)
+  concerto.table.query(sql=paste0(command, order))
+}
