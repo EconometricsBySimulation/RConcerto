@@ -41,6 +41,7 @@ rconcerto.tinsert <- function(table, param, dbname=concerto$db$name, noIP=F) {
   if (!noIP) {
     param$userIP=concerto$userIP
     param$sessionID=concerto$sessionID
+    param$version=concerto$version
   }
   arglist <- NULL
   for (i in 1:length(param)) arglist[i] <- sprintf("`%s`='%s'", names(param)[i], param[i])
