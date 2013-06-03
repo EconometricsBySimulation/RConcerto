@@ -63,9 +63,9 @@ rconcerto.dummy <- function() {
     userIP="12.123.123.123",
     mediaURL = "http://concerto4.e-psychometrics.com/media/3/",
     db=list(connection="<MySQLConnection:(1234,0)>",
-            name="concerto4_3")
+            name="concerto4_3"))
   
-  concerto.template.show <- function(template, param=NULL) print(paste("Template Show:", template))
-  )
+  concerto.template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
+
 }
 # rconcerto.dummy()
