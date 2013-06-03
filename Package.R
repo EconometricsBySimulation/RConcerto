@@ -10,8 +10,8 @@
 
 # HTML drop down menu object that return selections with the name sel_field by default.
 # Options 
-html.selectfield <- function(options, rows=4, name="sel_field") {
-  return <- paste0("<select name=", name, "size=\"", rows, "\">")
+html.selectfield2 <- function(options, rows=4, name="sel_field") {
+  return <- sprintf("<select name=%s size=\"%i\">", name, rows)
   for (i in 1:length(options)) return=paste0(return, "<option value=", i,">",options[i],"</option>")
   paste0(return, "</select>")
 }
