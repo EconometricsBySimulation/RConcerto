@@ -34,8 +34,6 @@ ll <- function(...) {
   CALL
 }
 
-
-
 # A wrapper for inserting values into a MySQL table.
 rconcerto.tinsert <- function(table, param, dbname=concerto$db$name) {
   command <- sprintf("INSERT INTO `%s`.`%s` SET ", dbname, table)
@@ -50,3 +48,22 @@ rconcerto.tselect <- function(table, order="", dbname=concerto$db$name) {
   if (order!="") order <- sprintf(" ORDER BY `%s` ASC", order)
   concerto.table.query(sql=paste0(command, order))
 }
+
+# Function. Set dummy parameters for test running concerto code on the desktop R package.
+rconcerto.dummy <- function() {
+  # I am going to declare global objects that simulate the concerto objects.
+  concerto <<- list(
+    testID=1, 
+    sessionID=2021, 
+    workspaceID=3, 
+    workspacePrefix="concerto4_", 
+    templateFIFOPath="/var/www/vhosts/concerto4.e-psychometrics.com/httpdocs/data/3/fifo_2", 
+    sessionPath="/var/www/vhosts/concerto4.e-psychometrics.com/httpdocs/data/3/fifo_2.Rs",
+    mediaPath="/var/www/vhosts/concerto4.e-psychometrics.com/httpdocs/media/3/", 
+    userIP="12.123.123.123",
+    mediaURL = "http://concerto4.e-psychometrics.com/media/3/",
+    db=list(connection="<MySQLConnection:(1234,0)>",
+            name="concerto4_3")
+  )
+}
+# rconcerto.dummy()
