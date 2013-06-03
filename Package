@@ -1,3 +1,11 @@
+# HTML builder functions
+# heroes <- c("Rick Grimes (Andrew Lincoln) from the Walking Dead", "Jill Valentine from Resident Evil", "Ashley 'Ash' J. Williams (Bruce Campbell) from the Evil Dead (1981)", "Robert Neville (Will Smith) from I am Legend")
+
+# concerto <- list(db=list(name="concerto4_13"), sessionID=321, userIP="34.2.3.4.564")
+# concerto.table.query <- function(sql) print(paste0("sql=",sql))
+
+# HTML Objects
+
 # HTML drop down menu object that return selections with the name sel_field by default.
 # Options 
 html.selectfield <- function(options, rows=4, name="sel_field") {
@@ -14,7 +22,6 @@ cc <- function(...) {
   for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[i] <- get(toString(CALL[i])))
   CALL
 }
-#cc(a=3,b=3,aa)
 
 # Concact a list naming elements from names of elements when names are not identified
 ll <- function(...) {
@@ -24,7 +31,6 @@ ll <- function(...) {
   for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[[i]] <- get(toString(CALL[i])))
   CALL
 }
-#ll(a=3,b=3,aa)
 
 # A wrapper for inserting values into a MySQL table.
 rconcerto.tinsert <- function(table, param, dbname=concerto$db$name) {
