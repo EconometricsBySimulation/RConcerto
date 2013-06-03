@@ -14,7 +14,7 @@ cc <- function(...) {
   for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[i] <- get(toString(CALL[i])))
   CALL
 }
-cc(a=3,b=3,aa)
+#cc(a=3,b=3,aa)
 
 # Concact a list naming elements from names of elements when names are not identified
 ll <- function(...) {
@@ -24,7 +24,7 @@ ll <- function(...) {
   for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[[i]] <- get(toString(CALL[i])))
   CALL
 }
-ll(a=3,b=3,aa)
+#ll(a=3,b=3,aa)
 
 # A wrapper for inserting values into a MySQL table.
 rconcerto.tinsert <- function(table, param, dbname=concerto$db$name) {
