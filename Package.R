@@ -35,8 +35,13 @@ ll <- function(...) {
 }
 
 # A wrapper for inserting values into a MySQL table.
-rconcerto.tinsert <- function(table, param, dbname=concerto$db$name) {
+rconcerto.tinsert <- function(table, param, dbname=concerto$db$name, noIP=F) {
   command <- sprintf("INSERT INTO `%s`.`%s` SET ", dbname, table)
+  # As default, save the user IP and the sessionID
+  if (!noIP) {
+    param$userIP=concerto$userIP
+    param$sessionID=concerto$sessionID
+  }
   arglist <- NULL
   for (i in 1:length(param)) arglist[i] <- sprintf("`%s`='%s'", names(param)[i], param[i])
   concerto.table.query(sql=paste(command, paste(arglist, collapse=",")))
