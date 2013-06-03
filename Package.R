@@ -1,3 +1,5 @@
+# RConcerto Package
+
 # HTML builder functions
 # heroes <- c("Rick Grimes (Andrew Lincoln) from the Walking Dead", "Jill Valentine from Resident Evil", "Ashley 'Ash' J. Williams (Bruce Campbell) from the Evil Dead (1981)", "Robert Neville (Will Smith) from I am Legend")
 
@@ -31,6 +33,8 @@ ll <- function(...) {
   for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[[i]] <- get(toString(CALL[i])))
   CALL
 }
+
+
 
 # A wrapper for inserting values into a MySQL table.
 rconcerto.tinsert <- function(table, param, dbname=concerto$db$name) {
