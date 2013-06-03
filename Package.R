@@ -16,6 +16,9 @@ html.selectfield <- function(options, rows=4, name="sel_field") {
   paste0(return, "</select>")
 }
 
+# Highlight the text
+highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
+
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
   CALL <- match.call(expand.dots = FALSE)$...
