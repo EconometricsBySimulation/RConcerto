@@ -22,11 +22,12 @@ html.selectfield <- function(options, rows=4, name="sel_field") {
 html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
 
 # Create a html button
-html.button <- function(name="btn_name", value="Submit", text="") paste0("<input name=\"", name, 
+html.button <- function(name="btn_name", value="Submit", text="") paste0(text,"<input name=\"", name, 
                              "\" type=\"button\" value=\"",value,"\" />")                  
 
 # A function for easily returning concerto default values to the screen.
-concerto.show <- function() concerto.template.show(HTML=paste(capture.output(concerto),"\n", html.button(),collapse=""))
+concerto.show <- function() concerto.template.show(HTML=html.button(text=
+                                                   paste(capture.output(concerto),"\n" ,collapse="")))
 
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
