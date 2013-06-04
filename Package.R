@@ -28,17 +28,6 @@ html.button <- function(name="btn_name", value="Submit", text="") paste0(text,"<
 # A function for easily returning concerto default values to the screen.
 concerto.show <- function() concerto.template.show(HTML=html.button(text=paste("concert:",  
                                                    capture.output(concerto),"<br>" ,collapse="")))
-
-# A function for easily returning all environmental objects and values to the screen of an html document.
-concerto.ls <- function() {
-  ls_all <-  paste(paste0(ls(envir=globalenv()),collapse=" "), "<br>")
-  for (i in ls(envir=globalenv())) {
-    values <- paste0(i,":", capture.output(get(i)),"<br>" ,collapse="")
-    ls_all <- paste0(ls_all, values)
-    }
-  concerto.template.show(HTML=html.button(text=ls_all))
-  }
-
   
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
