@@ -2,8 +2,8 @@
 
 # HTML builder functions
 # heroes <- c("Rick Grimes (Andrew Lincoln) from the Walking Dead", "Jill Valentine from Resident Evil", 
-              "Ashley 'Ash' J. Williams (Bruce Campbell) from the Evil Dead (1981)", 
-              "Robert Neville (Will Smith) from I am Legend")
+#              "Ashley 'Ash' J. Williams (Bruce Campbell) from the Evil Dead (1981)", 
+#              "Robert Neville (Will Smith) from I am Legend")
 
 # concerto <- list(db=list(name="concerto4_13"), sessionID=321, userIP="34.2.3.4.564")
 # concerto.table.query <- function(sql) print(paste0("sql=",sql))
@@ -22,8 +22,11 @@ html.selectfield <- function(options, rows=4, name="sel_field") {
 html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
 
 # Create a html button
-html.button <- function(name="btn_name", value="Submit") paste0("<input name=\"", name, 
-                             "\" type=\"button\" value=\"",value,"\" />")
+html.button <- function(name="btn_name", value="Submit", text="") paste0("<input name=\"", name, 
+                             "\" type=\"button\" value=\"",value,"\" />")                  
+
+# A function for easily returning concerto default values to the screen.
+concerto.show <- function() concerto.template.show(HTML=paste(capture.output(concerto),"\n", html.button()))
 
 concerto.template.show(HTML="Please click the button: <button>click me</button>")
 
