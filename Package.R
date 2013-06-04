@@ -26,7 +26,7 @@ html.button <- function(name="btn_name", value="Submit", text="") paste0("<input
                              "\" type=\"button\" value=\"",value,"\" />")                  
 
 # A function for easily returning concerto default values to the screen.
-concerto.show <- function() concerto.template.show(HTML=paste(capture.output(concerto),"\n", html.button()))
+concerto.show <- function() concerto.template.show(HTML=paste(capture.output(concerto),"\n", html.button(),collapse=""))
 
 concerto.template.show(HTML="Please click the button: <button>click me</button>")
 
