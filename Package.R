@@ -32,11 +32,14 @@ concerto.show <- function() concerto.template.show(HTML=html.button(text=paste("
 # A function for easily returning all environmental objects and values to the screen of an html document.
 concerto.ls <- function() {
   ls_all <-  paste(paste0(ls(envir=globalenv()),collapse=" "), "<br>")
-  for (i in ls(envir=globalenv())) ls_all <- paste0(ls_all, paste0(i,":", 
-                                                   capture.output(concerto),"<br>" ,collapse=""))
-   concerto.template.show(HTML=html.button(text=ls_all))
+  for (i in ls(envir=globalenv())) {
+    values <- paste0(i,":", capture.output(get(i)),"<br>" ,collapse="")
+    ls_all <- paste0(ls_all, values)
+    }
+  concerto.template.show(HTML=html.button(text=ls_all))
   }
 
+  
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
   CALL <- match.call(expand.dots = FALSE)$...
