@@ -17,7 +17,12 @@ html.selectfield <- function(options, rows=4, name="sel_field") {
 }
 
 # Highlight the text
-highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
+html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
+
+# Create a html button
+html.button <- function(name="btn_name", value="Submit") paste0("<input name=\"", name, "\" type=\"button\" value=\"",value,"\" />"
+
+concerto.template.show(HTML="Please click the button: <button>click me</button>")
 
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
