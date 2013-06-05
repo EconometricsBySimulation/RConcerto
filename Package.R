@@ -106,3 +106,25 @@ dropbox.eval <- function(x, noeval=F) {
 }
 
 # dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
+
+# Load data from dropbox
+# Modified from: http://thebiobucket.blogspot.com/2013/04/download-files-from-dropbox.html
+dropbox.load <- function(x, key) {
+  require(RCurl)
+  # Target a file
+  bin <- getBinaryURL(paste0("https://dl.dropboxusercontent.com/", key, "/", x),
+                             ssl.verifypeer = FALSE)
+  # Establishes a connection
+  con <- file(x, open = "wb")
+  # Write the file to the working directory
+  writeBin(bin, con)
+  # Close the connection
+  close(con)
+  # Send a message to the user
+  message(noquote(paste(x, "read into", getwd())))  
+  # Finally laod the file
+  load(x)
+}
+
+# dropbox.load("IRT-param.Rdata", "s/ae8m75armpu5d4r")
+# summary(IRTparam)
