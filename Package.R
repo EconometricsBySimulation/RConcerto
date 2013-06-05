@@ -105,4 +105,4 @@ dropbox.eval <- function(x, noeval=F) {
   return(intext)
 }
 
-dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
+# dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
