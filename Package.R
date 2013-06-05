@@ -88,3 +88,15 @@ rconcerto.dummy <- function() {
 
 }
 # rconcerto.dummy()
+
+# Evaluate code directly from a dropbox file
+dropbox.eval <- function(x, show.file=F) {
+  require(RCurl)
+  intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x), 
+                        ssl.verifypeer = FALSE)
+  intext <- gsub("\r","", intext)
+  if (show.file) print(intext)
+  eval(parse(text = intext), envir= .GlobalEnv)
+  return(intext)
+}
+# dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
