@@ -90,13 +90,19 @@ rconcerto.dummy <- function() {
 # rconcerto.dummy()
 
 # Evaluate code directly from a dropbox file
-dropbox.eval <- function(x, show.file=F) {
+dropbox.eval <- function(x, noeval=F) {
   require(RCurl)
+  # Load the file into memory as a text file with getURL
   intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x), 
                         ssl.verifypeer = FALSE)
+  # For some reason \r seem to be frequently inserted into 
+  #   the script files that I save.  They present a problem
+  #   so I remove them using gsub.
   intext <- gsub("\r","", intext)
-  if (show.file) print(intext)
-  eval(parse(text = intext), envir= .GlobalEnv)
+  # Evaluate the input file.
+  if (!noeval) eval(parse(text = intext), envir= .GlobalEnv)
+  # Finally return the dropbox script as text.
   return(intext)
 }
-# dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
+
+dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
