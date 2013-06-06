@@ -9,6 +9,7 @@
 # concerto.table.query <- function(sql) print(paste0("sql=",sql))
 
 phi <- (5/2)^.5       # The Golden Ratio
+minmax <- function(x) c(min(x),max(x))
 
 # HTML Objects
 
