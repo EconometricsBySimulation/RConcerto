@@ -102,6 +102,46 @@ rconcerto.dummy <- function() {
 }
 # rconcerto.dummy()
 
+# Generate a 
+rconcerto.bell <- function(
+    targ=paste(sample(letters, 10, replace=T), collapse=""), # Generate a random letter string
+    thetahat=-.25,                       # Default is about 43%
+    saveplot=T,                          # Save the plot is standard 
+    col=c(grey(.4),grey(.8)),            # Change colors to shades of grey
+    width=600,                           # Specify the width of the plot
+    main="You scored better than %s%% of those taking this test.") {
+   
+    # If plot is enabled plot open a dev.
+    if (saveplot) {
+      save_target <- concerto.targ(paste0(targ, ".png"))
+      png(file=save_target[1], width = width, height = width/phi)
+      print(paste("Graph saved to", save_target[2]))
+    }
+    # Map the range that the y axes can reach
+      fullrange <- seq(-4, 4, .1)
+      pfullrange <- dnorm(fullrange)
+    # Specify the ranges for that achieved by the individual.
+      thetarange <- seq(-3, thetahat, .1)
+      pthetarange <- dnorm(thetarange)
+    # Replace the text in the title with the %.
+      main <- sprintf(main, round(pnorm(thetahat)*100,1))
+    # Set the graph margins
+      par(mar=c(1,1,3,1))
+    # Plot the graph without any points
+      plot(c(-3,3), minmax(pfullrange), type="n", lwd=3, main=main, ylab = "", xlab = "", xaxt='n', yaxt='n')
+    # Plot the range of the population
+      polygon(c(-4,fullrange,4),c(0,pfullrange,0), lwd=3, col=grey(.4))
+    # Plot the range covered by the person
+      polygon(c(-4,thetarange,max(thetarange)),c(0,pthetarange,0), lwd=3, col=grey(.8))
+  
+  if (saveplot) {
+     dev.off()
+     return(save_target[2])
+  }
+}
+# graph1 <- rconcerto.bell()
+
+
 # Evaluate code directly from a dropbox file
 dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
   require(RCurl)
