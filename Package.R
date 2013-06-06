@@ -100,18 +100,28 @@ rconcerto.dummy <- function() {
 # rconcerto.dummy()
 
 # Evaluate code directly from a dropbox file
-dropbox.eval <- function(x, noeval=F, printme=F) {
+dropbox.eval <- function(x, noeval=F, printme=F, split="\n") {
   require(RCurl)
   # Load the file into memory as a text file with getURL
-  intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x), 
+    intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x), 
                         ssl.verifypeer = FALSE)
   # For some reason \r seem to be frequently inserted into 
   #   the script files that I save.  They present a problem
   #   so I remove them using gsub.
-  intext <- gsub("\r","", intext)
-  if (printme) cat(intext)
+    intext <- gsub("\r","", intext)
+  # First do some error checking.  Count the number of {} and () to see if they match.
+    checks <- c("(", ")", "{", "{")
+    nchecks <- NA
+    for (i in 1:length(checks)) nchecks[i]<-(nchar(gsub(sprintf("[^%s]", checks[i]),"",intext)))
+    if (!all(nchecks[c(1,3)]==nchecks[c(2,4)]))
+        print(paste0("Warning! Mis-matched counts:", paste0(nchecks, "'", checks,"'" ,collapse=" , ")))
+  # Break the intext into a different value for each line.
+    untext <- unlist(strsplit(intext, split, fixed = TRUE))
   # Evaluate the input file.
-  if (!noeval) eval(parse(text = intext), envir= .GlobalEnv)
+    if (!noeval) for (i in untext) {
+      if (printme) cat(paste(i,"\n"))
+      eval(parse(text = i), envir= .GlobalEnv)
+    }
   # Finally return the dropbox script as text.
   return(intext)
 }
