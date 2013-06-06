@@ -122,3 +122,19 @@ concerto.check.show <- function(template, param=list(), vcheck="", mess="Please 
   # Returns the values to the user
   returner
 }
+
+
+# This function creates a named list.
+# http://stackoverflow.com/questions/16951080/can-list-objects-be-created-in-r-that-name-themselves-based-on-input-object-name/
+nl <- function(...) {
+    L <- list(...)
+    snm <- sapply(substitute(list(...)),deparse)[-1]
+    if (is.null(nm <- names(L))) nm <- snm
+    if (any(nonames <- nm=="")) nm[nonames] <- snm[nonames]
+    setNames(L,nm)
+}
+## TESTING:
+# a <- b <- c <- 1
+# namedList(a,b,c)
+# namedList(a,b,d=c)
+# namedList(e=a,f=b,d=c)
