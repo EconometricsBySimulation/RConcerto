@@ -117,7 +117,7 @@ rconcerto.bell <- function(
    
     # If plot is enabled plot open a dev.
     if (saveplot) {
-      save_target <- rconcerto.targ(paste0(targ, ".png"))
+      save_target <- rconcerto.targ(paste0(name=targ, ".png"))
       png(file=save_target[1], width = width, height = width/phi)
       print(paste("Graph saved to", save_target[2]))
     }
