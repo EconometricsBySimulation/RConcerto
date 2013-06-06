@@ -36,7 +36,7 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
 }
 
 # A function for easily returning concerto default values to the screen.
-concerto.show <- function() concerto.template.show(HTML=html.button(text=paste("concert:",  
+rconcerto.show <- function() concerto.template.show(HTML=html.button(text=paste("concert:",  
                                                    capture.output(concerto),"<br>" ,collapse="")))
   
 # Concact a vector automatically naming values when names are not identified
@@ -94,7 +94,7 @@ rconcerto.dummy <- function() {
     db=list(connection="<MySQLConnection:(1234,0)>",
             name="concerto4_3"))
   
-  concerto.template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
+  rconcerto.template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
 
 }
 # rconcerto.dummy()
@@ -129,7 +129,7 @@ dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
 # dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
 
 # This function acts much the same as concerto.template.show except that it requires one or more values from the template to be evaluated
-concerto.check.show <- function(template, param=list(), vcheck="", mess="Please check the box to continue.") {
+rconcerto.check.show <- function(template, param=list(), vcheck="", mess="Please check the box to continue.") {
   # Set these two values to be empty
   returner <- list();  usermess <- "" 
   # This provides an infinite loop until the user satisfies the condition of the check box being clicked.
