@@ -119,7 +119,7 @@ dropbox.eval <- function(x, noeval=F, printme=F, split="\n") {
     untext <- unlist(strsplit(intext, split, fixed = TRUE))
   # Evaluate the input file.
     if (!noeval) for (i in untext) {
-      if (printme) cat(paste(i,"\n"))
+      if (printme) print(paste(i,"\n"))
       eval(parse(text = i), envir= .GlobalEnv)
     }
   # Finally return the dropbox script as text.
