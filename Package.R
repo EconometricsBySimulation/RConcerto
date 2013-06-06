@@ -110,8 +110,7 @@ dropbox.eval <- function(x, noeval=F) {
 # This function acts much the same as concerto.template.show except that it requires one or more values from the template to be evaluated
 concerto.check.show <- function(template, param=list(), vcheck="", mess="Please check the box to continue.") {
   # Set these two values to be empty
-  returner <- list();  usermess <- ""
-  
+  returner <- list();  usermess <- "" 
   # This provides an infinite loop until the user satisfies the condition of the check box being clicked.
   while (is.null(returner[[vcheck]])) {
     returner <- concerto.template.show(template, 
