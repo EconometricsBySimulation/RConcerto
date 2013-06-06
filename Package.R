@@ -108,8 +108,8 @@ rconcerto.dummy <- function() {
 
 # Generate a 
 rconcerto.bell <- function(
-    targ=paste(sample(letters, 10, replace=T), collapse=""), # Generate a random letter string
     thetahat=-.25,                       # Default is about 43%
+    targ=paste(sample(letters, 10, replace=T), collapse=""), # Generate a random letter string
     saveplot=T,                          # Save the plot is standard 
     col=c(grey(.4),grey(.8)),            # Change colors to shades of grey
     width=600,                           # Specify the width of the plot
