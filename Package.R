@@ -8,6 +8,8 @@
 # concerto <- list(db=list(name="concerto4_13"), sessionID=321, userIP="34.2.3.4.564")
 # concerto.table.query <- function(sql) print(paste0("sql=",sql))
 
+phi <- (5/2)^.5       # The Golden Ratio
+
 # HTML Objects
 
 # HTML drop down menu object that return selections with the name sel_field by default.
