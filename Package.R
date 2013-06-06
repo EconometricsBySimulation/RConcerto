@@ -90,7 +90,7 @@ rconcerto.dummy <- function() {
 # rconcerto.dummy()
 
 # Evaluate code directly from a dropbox file
-dropbox.eval <- function(x, noeval=F) {
+dropbox.eval <- function(x, noeval=F, printme=F) {
   require(RCurl)
   # Load the file into memory as a text file with getURL
   intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x), 
@@ -99,6 +99,7 @@ dropbox.eval <- function(x, noeval=F) {
   #   the script files that I save.  They present a problem
   #   so I remove them using gsub.
   intext <- gsub("\r","", intext)
+  if (printme) cat(intext)
   # Evaluate the input file.
   if (!noeval) eval(parse(text = intext), envir= .GlobalEnv)
   # Finally return the dropbox script as text.
