@@ -25,6 +25,16 @@ html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00
 html.button <- function(name="btn_name", value="Submit", text="") paste0(text,"<input name=\"", name, 
                              "\" type=\"button\" value=\"",value,"\" />")                  
 
+# Insert an html image
+html.image <- function(targ, alt="", width="", height="") {
+  # Modify the the width and height strings
+  if ((width!="")&(height=="")) stop("Warning: Height must be specified if width is specified!")
+  if (height!="") height <- sprintf('height: %spx;',height)
+  if (width!="")  width <- sprintf('width: %spx;',width)
+  # Use sprintf to piece together the html command
+  sprintf('<img alt="%s" src="%s" style="%s %s" />', alt, targ, width, height)
+}
+
 # A function for easily returning concerto default values to the screen.
 concerto.show <- function() concerto.template.show(HTML=html.button(text=paste("concert:",  
                                                    capture.output(concerto),"<br>" ,collapse="")))
