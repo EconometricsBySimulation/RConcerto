@@ -41,6 +41,10 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
 # A function for easily returning concerto default values to the screen.
 rconcerto.show <- function() concerto.template.show(HTML=html.button(text=paste("concert:",  
                                                    capture.output(concerto),"<br>" ,collapse="")))
+
+# Define a function to easily and uniquely generate file save locations.
+rconcerto.targ <- function(name="",sep=".") 
+    paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
   
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
