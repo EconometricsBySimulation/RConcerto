@@ -41,6 +41,22 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
 # A function for easily returning concerto default values to the screen.
 rconcerto.show <- function() concerto.template.show(HTML=html.button(text=paste("concert:",  
                                                    capture.output(concerto),"<br>" ,collapse="")))
+                                              
+# A function for creating a permenent HTML document for showing (mostly used for facebook share)
+rconcerto.template.write <- function(template, param=list(), tag="") {
+   HTMLtemp <- concerto.template.get(template) # Read the template HTML information
+   HTMLtemp <- concerto.template.fillHTML(temp, param) # Replace parameter information
+   html.targ <- rconcerto.targ(paste0(tag,template,".HTML"))
+   fileConn<-file(html.targ[1]) # Open a connection to a write file
+     writeLines(HTMLtemp, fileConn) # Write HTML to file
+   close(fileConn) # Close file
+   return(html.targ[2]) # Return location of the write file
+}
+
+mk.facebook <- function(link)
+  paste0("Share your results&nbsp;on&nbsp;<a href=\"http://www.facebook.com/sharer.php?u=",link,
+  "\" target=\"_blank\"><img src=\"http://g-ecx.images-amazon.com/images/G/01/askville/bs/icn-facebook.png\" 
+  style=\"width: 28px; height: 28px;\" /></a>")
 
 # Define a function to easily and uniquely generate file save locations.
 rconcerto.targ <- function(name="",sep=".") 
