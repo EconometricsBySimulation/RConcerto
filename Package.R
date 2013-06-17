@@ -45,7 +45,7 @@ rconcerto.show <- function() concerto.template.show(HTML=html.button(text=paste(
 # A function for creating a permenent HTML document for showing (mostly used for facebook share)
 rconcerto.template.write <- function(template, param=list(), tag="") {
    HTMLtemp <- concerto.template.get(template) # Read the template HTML information
-   HTMLtemp <- concerto.template.fillHTML(temp, param) # Replace parameter information
+   HTMLtemp <- concerto.template.fillHTML(HTMLtemp, param) # Replace parameter information
    html.targ <- rconcerto.targ(paste0(tag,template,".HTML"))
    fileConn<-file(html.targ[1]) # Open a connection to a write file
      writeLines(HTMLtemp, fileConn) # Write HTML to file
