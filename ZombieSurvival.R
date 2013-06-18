@@ -76,7 +76,8 @@
     item.selected$latency[i] <- latency <- response[1]
      
     # Save results to response table     
-rconcerto.tinsert("03-Zomb-03Resp", param=c(user_response=user_response, latency=toString(latency), hero=hero, for_hero=for_hero, item=item.selected$item[i], itemn=item.numb[i], iorder=i))
+  rconcerto.tinsert("03-Zomb-03Resp", param=c(user_response=user_response, latency=toString(latency), hero=hero, for_hero=for_hero, item=item.selected$item[i], itemn=item.numb[i], iorder=i))
+  };
 #########################################  
 # Calculate score.
 #########################################
