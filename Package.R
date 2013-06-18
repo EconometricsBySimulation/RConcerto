@@ -53,8 +53,9 @@ rconcerto.template.write <- function(template, param=list(), tag="") {
    return(html.targ[2]) # Return location of the write file
 }
 
+# Make a facebook button that shares the link
 mk.facebook <- function(link)
-  paste0("Share &nbsp;on&nbsp;<a href=\"http://www.facebook.com/sharer.php?u=",link,
+  paste0("Share &nbsp;<a href=\"http://www.facebook.com/sharer.php?u=",link,
   "\" target=\"_blank\"><img src=\"http://g-ecx.images-amazon.com/images/G/01/askville/bs/icn-facebook.png\" 
   style=\"width: 28px; height: 28px;\" /></a>")
 
