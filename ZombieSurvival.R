@@ -281,7 +281,7 @@ for (i in 2:3) {
     # Accept submissions from 
     if(submitted != "Please consider submitting a question to be added to the database!") {
       rconcerto.tinsert("03-Zomb-01Items", param=c(item=submitted, approve=0))
-      submitted <- paste(submitted, "Submitted! Thanks! <br> Submit another!")
+      submitted <- paste("Submitted! Thanks! <br> Consider submiting another another!")
     }
   }
   
