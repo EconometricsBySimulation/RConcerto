@@ -66,7 +66,7 @@
     if (i>nitems.you) {
       question_setup <- paste0("Answer the following question for your hero/heroine:", html.highlight(hero))
       for_hero<-1
-    }
+	  }
     
     # Solicit user response
     response <- concerto.template.show("03-Zomb-03-Item", param=list(question_setup=question_setup, question_text=item.selected$item[i], i=paste0(i,"/",nitems)))
@@ -76,7 +76,7 @@
     item.selected$latency[i] <- latency <- response[1]
      
     # Save results to response table     
-    rconcerto.tinsert("03-Zomb-03Resp", param=c(user_response=user_response, latency=toString(latency), hero=hero, for_hero=for_hero))
+    rconcerto.tinsert("03-Zomb-03Resp", param=c(user_response=user_response, latency=toString(latency), hero=hero, for_hero=for_hero, item=item.selected$item[i]))
 	};
 
 #########################################  
@@ -265,9 +265,9 @@ for (i in 2:3) {
 # Loop though and present final results
 ########################################
 
+  submitted <- "Please consider submitting a question to be added to the database"
 
   while (1==1) {
-    submitted <- "Please consider submitting a question to be added to the database"
     
     param <- nl(submitted=html.highlight(submitted), plot1=plot1[2], plot2=plot2[2], plot3=plot3[2], likeyou=likeyou0, tpeeps=tpeeps0, preparedness, psurvival=cohort.prob[60], zadvice, hadvice, descriptor, highest.risk)
     
@@ -285,3 +285,6 @@ for (i in 2:3) {
       submitted <- paste(submitted, "Submitted! Thanks! <br> Submit another!")
     }
   }
+  
+  # What was first degree
+  # What was your last degree
