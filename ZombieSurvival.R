@@ -270,11 +270,11 @@ for (i in 2:3) {
     
     param <- nl(submitted=html.highlight(submitted), plot1=plot1[2], plot2=plot2[2], plot3=plot3[2], likeyou=likeyou0, tpeeps=tpeeps0, preparedness, psurvival=cohort.prob[60], zadvice, hadvice, descriptor, highest.risk)
     
-    facelink <- rconcerto.template.write("03-Zomb-03-Summary", param)
+    facelink <- rconcerto.template.write("03-Zomb-04-Summary", param)
     
     facebook <- mk.facebook(facelink)
     
-    submit.item <- concerto.template.show("03-Zomb-03-Summary", param=c(facebook=facebook,param))
+    submit.item <- concerto.template.show("03-Zomb-04-Summary", param=c(facebook=facebook,param))
     
     submitted <- submit.item$txt_submit
     
