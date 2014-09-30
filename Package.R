@@ -26,7 +26,7 @@ html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00
 
 # Create a html button
 html.button <- function(name="btn_name", value="Submit", text="") paste0(text,"<input name=\"", name, 
-                             "\" type=\"button\" value=\"",value,"\" />")                  
+                                                                         "\" type=\"button\" value=\"",value,"\" />")                  
 
 # Insert an html image
 html.image <- function(targ, alt="", width="", height="", align="center") {
@@ -39,33 +39,34 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
 }
 
 # A function for easily returning concerto default values to the screen.
-rconcerto.show <- function() concerto.template.show(HTML=html.button(text=paste("concert:",  
-                                                   capture.output(concerto),"<br>" ,collapse="")))
-                                              
+rconcerto.show <- function() 
+  concerto.template.show(HTML=html.button(text=paste("concert:",  
+                         capture.output(concerto),"<br>" ,collapse="")))
+
 # A function for creating a permenent HTML document for showing (mostly used for facebook share)
 rconcerto.template.write <- function(template, param=list(), tag="") {
-   HTMLtemp <- concerto.template.get(template) # Read the template HTML information
-   HTMLtemp <- concerto.template.fillHTML(HTMLtemp, param) # Replace parameter information
-   html.targ <- rconcerto.targ(paste0(tag,template,".HTML"))
-   fileConn<-file(html.targ[1]) # Open a connection to a write file
-     writeLines(HTMLtemp, fileConn) # Write HTML to file
-   close(fileConn) # Close file
-   return(html.targ[2]) # Return location of the write file
+  HTMLtemp <- concerto.template.get(template) # Read the template HTML information
+  HTMLtemp <- concerto.template.fillHTML(HTMLtemp, param) # Replace parameter information
+  html.targ <- rconcerto.targ(paste0(tag,template,".HTML"))
+  fileConn<-file(html.targ[1]) # Open a connection to a write file
+  writeLines(HTMLtemp, fileConn) # Write HTML to file
+  close(fileConn) # Close file
+  return(html.targ[2]) # Return location of the write file
 }
 
 # Make a facebook button that shares the link
 mk.facebook <- function(link)
   paste0("Share &nbsp;<a href=\"http://www.facebook.com/sharer.php?u=",link,
-  "\" target=\"_blank\"><img src=\"http://g-ecx.images-amazon.com/images/G/01/askville/bs/icn-facebook.png\" 
-  style=\"width: 28px; height: 28px;\" /></a>")
+         "\" target=\"_blank\"><img src=\"http://g-ecx.images-amazon.com/images/G/01/askville/bs/icn-facebook.png\" 
+         style=\"width: 28px; height: 28px;\" /></a>")
 
 # Define a function to easily and uniquely generate file save locations.
 rconcerto.targ <- function(name="",sep=".") 
-    paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
-  
+  paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
+
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
-  CALL <- match.call(expand.dots = FALSE)$...)
+  CALL <- match.call(expand.dots = FALSE)$...
   no.name <- names(CALL)==""
   names(CALL)[no.name]=CALL[no.name]
   for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[i] <- get(toString(CALL[i])))
@@ -117,45 +118,45 @@ rconcerto.dummy <- function() {
             name="concerto4_3"))
   
   rconcerto.template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
-
+  
 }
 # rconcerto.dummy()
 
 # Generate a 
 rconcerto.bell <- function(
-    thetahat=-.25,                       # Default is about 43%
-    targ=paste(sample(letters, 10, replace=T), collapse=""), # Generate a random letter string
-    saveplot=T,                          # Save the plot is standard 
-    col=c(grey(.4),grey(.8)),            # Change colors to shades of grey
-    width=600,                           # Specify the width of the plot
-    main="You scored better than %s%% of those taking this test.") {
-   
-    # If plot is enabled plot open a dev.
-    if (saveplot) {
-      save_target <- rconcerto.targ(paste0(name=targ, ".png"))
-      png(file=save_target[1], width = width, height = width/phi)
-      print(paste("Graph saved to", save_target[2]))
-    }
-    # Map the range that the y axes can reach
-      fullrange <- seq(-4, 4, .1)
-      pfullrange <- dnorm(fullrange)
-    # Specify the ranges for that achieved by the individual.
-      thetarange <- seq(-3, thetahat, .1)
-      pthetarange <- dnorm(thetarange)
-    # Replace the text in the title with the %.
-      main <- sprintf(main, round(pnorm(thetahat)*100,1))
-    # Set the graph margins
-      par(mar=c(1,1,3,1))
-    # Plot the graph without any points
-      plot(c(-3,3), minmax(pfullrange), type="n", lwd=3, main=main, ylab = "", xlab = "", xaxt='n', yaxt='n')
-    # Plot the range of the population
-      polygon(c(-4,fullrange,4),c(0,pfullrange,0), lwd=3, col=grey(.4))
-    # Plot the range covered by the person
-      polygon(c(-4,thetarange,max(thetarange)),c(0,pthetarange,0), lwd=3, col=grey(.8))
+  thetahat=-.25,                       # Default is about 43%
+  targ=paste(sample(letters, 10, replace=T), collapse=""), # Generate a random letter string
+  saveplot=T,                          # Save the plot is standard 
+  col=c(grey(.4),grey(.8)),            # Change colors to shades of grey
+  width=600,                           # Specify the width of the plot
+  main="You scored better than %s%% of those taking this test.") {
+  
+  # If plot is enabled plot open a dev.
+  if (saveplot) {
+    save_target <- rconcerto.targ(paste0(name=targ, ".png"))
+    png(file=save_target[1], width = width, height = width/phi)
+    print(paste("Graph saved to", save_target[2]))
+  }
+  # Map the range that the y axes can reach
+  fullrange <- seq(-4, 4, .1)
+  pfullrange <- dnorm(fullrange)
+  # Specify the ranges for that achieved by the individual.
+  thetarange <- seq(-3, thetahat, .1)
+  pthetarange <- dnorm(thetarange)
+  # Replace the text in the title with the %.
+  main <- sprintf(main, round(pnorm(thetahat)*100,1))
+  # Set the graph margins
+  par(mar=c(1,1,3,1))
+  # Plot the graph without any points
+  plot(c(-3,3), minmax(pfullrange), type="n", lwd=3, main=main, ylab = "", xlab = "", xaxt='n', yaxt='n')
+  # Plot the range of the population
+  polygon(c(-4,fullrange,4),c(0,pfullrange,0), lwd=3, col=grey(.4))
+  # Plot the range covered by the person
+  polygon(c(-4,thetarange,max(thetarange)),c(0,pthetarange,0), lwd=3, col=grey(.8))
   
   if (saveplot) {
-     dev.off()
-     return(save_target[2])
+    dev.off()
+    return(save_target[2])
   }
 }
 # graph1 <- rconcerto.bell()
@@ -165,25 +166,25 @@ rconcerto.bell <- function(
 dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
   require(RCurl)
   # Load the file into memory as a text file with getURL
-    intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x), 
-                        ssl.verifypeer = FALSE)
+  intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x), 
+                   ssl.verifypeer = FALSE)
   # For some reason \r seem to be frequently inserted into 
   #   the script files that I save.  They present a problem
   #   so I remove them using gsub.
-    intext <- gsub("\r","", intext)
+  intext <- gsub("\r","", intext)
   # First do some error checking.  Count the number of {} and () to see if they match.
-    checks <- c("(", ")", "{", "{")
-    nchecks <- NA
-    for (i in 1:length(checks)) nchecks[i]<-(nchar(gsub(sprintf("[^%s]", checks[i]),"",intext)))
-    if (!all(nchecks[c(1,3)]==nchecks[c(2,4)]))
-        print(paste0("Warning! Mis-matched counts:", paste0(nchecks, "'", checks,"'" ,collapse=" , ")))
+  checks <- c("(", ")", "{", "{")
+  nchecks <- NA
+  for (i in 1:length(checks)) nchecks[i]<-(nchar(gsub(sprintf("[^%s]", checks[i]),"",intext)))
+  if (!all(nchecks[c(1,3)]==nchecks[c(2,4)]))
+    print(paste0("Warning! Mis-matched counts:", paste0(nchecks, "'", checks,"'" ,collapse=" , ")))
   # Break the intext into a different value for each line.
-    untext <- unlist(strsplit(intext, split, fixed = TRUE))
+  untext <- unlist(strsplit(intext, split, fixed = TRUE))
   # Evaluate the input file.
-    if (!noeval) for (i in untext) {
-      if (printme) cat(paste("", i,"\n"))
-      eval(parse(text = i), envir= .GlobalEnv)
-    }
+  if (!noeval) for (i in untext) {
+    if (printme) cat(paste("", i,"\n"))
+    eval(parse(text = i), envir= .GlobalEnv)
+  }
   # Finally return the dropbox script as text.
   if (!no_return) return(intext)
 }
@@ -197,7 +198,7 @@ rconcerto.check.show <- function(template, param=list(), vcheck="", mess="Please
   # This provides an infinite loop until the user satisfies the condition of the check box being clicked.
   while (is.null(returner[[vcheck]])) {
     returner <- concerto.template.show(template, 
-                                  param=c(param, vcheck=usermess))
+                                       param=c(param, vcheck=usermess))
     # Send the user the need to check the box message.
     usermess <- html.highlight(mess)
   }
@@ -209,14 +210,14 @@ rconcerto.check.show <- function(template, param=list(), vcheck="", mess="Please
 # This function creates a named list.
 # http://stackoverflow.com/questions/16951080/can-list-objects-be-created-in-r-that-name-themselves-based-on-input-object-name/
 nl <- function(...) {
-    L <- list(...)
-    snm <- sapply(substitute(list(...)),deparse)[-1]
-    if (is.null(nm <- names(L))) nm <- snm
-    if (any(nonames <- nm=="")) nm[nonames] <- snm[nonames]
-    setNames(L,nm)
+  L <- list(...)
+  snm <- sapply(substitute(list(...)),deparse)[-1]
+  if (is.null(nm <- names(L))) nm <- snm
+  if (any(nonames <- nm=="")) nm[nonames] <- snm[nonames]
+  setNames(L,nm)
 }
 ## TESTING:
 # a <- b <- c <- 1
-# namedList(a,b,c)
-# namedList(a,b,d=c)
-# namedList(e=a,f=b,d=c)
+# nl(a,b,c)
+# nl(a,b,d=c)
+# nl(e=a,f=b,d=c)
