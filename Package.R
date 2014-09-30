@@ -65,7 +65,7 @@ rconcerto.targ <- function(name="",sep=".")
   
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
-  CALL <- match.call(expand.dots = FALSE)$...
+  CALL <- match.call(expand.dots = FALSE)$...)
   no.name <- names(CALL)==""
   names(CALL)[no.name]=CALL[no.name]
   for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[i] <- get(toString(CALL[i])))
