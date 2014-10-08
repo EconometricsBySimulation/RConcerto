@@ -11,6 +11,7 @@
 phi <- (5/2)^.5       # The Golden Ratio
 minmax <- function(x) c(min(x),max(x))
 p <- paste0
+p <- print
 
 # HTML Objects
 
@@ -26,8 +27,8 @@ html.selectfield <- function(options, rows=4, name="sel_field") {
 html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
 
 # Create a html button
-html.button <- function(name="btn_name", value="Submit", text="") paste0(text,"<input name=\"", name, 
-                                                                         "\" type=\"button\" value=\"",value,"\" />")                  
+html.button <- function(name="btn_name", value="Submit", text="") 
+  p(text,"<input name=\"", name, "\" type=\"button\" value=\"",value,"\" />")                  
 
 # Insert an html image
 html.image <- function(targ, alt="", width="", height="", align="center") {
@@ -57,7 +58,7 @@ rconcerto.template.write <- function(template, param=list(), tag="") {
 
 # Make a facebook button that shares the link
 mk.facebook <- function(link)
-  paste0("Share &nbsp;<a href=\"http://www.facebook.com/sharer.php?u=",link,
+  p("Share &nbsp;<a href=\"http://www.facebook.com/sharer.php?u=",link,
          "\" target=\"_blank\"><img src=\"http://g-ecx.images-amazon.com/images/G/01/askville/bs/icn-facebook.png\" 
          style=\"width: 28px; height: 28px;\" /></a>")
 
