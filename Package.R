@@ -1,16 +1,30 @@
 # RConcerto Package
 
-# HTML builder functions
-# heroes <- c("Rick Grimes (Andrew Lincoln) from the Walking Dead", "Jill Valentine from Resident Evil", 
-#              "Ashley 'Ash' J. Williams (Bruce Campbell) from the Evil Dead (1981)", 
-#              "Robert Neville (Will Smith) from I am Legend")
-
 # concerto <- list(db=list(name="concerto4_13"), sessionID=321, userIP="34.2.3.4.564")
 # concerto.table.query <- function(sql) print(paste0("sql=",sql))
 
 phi <- (5/2)^.5       # The Golden Ratio
 minmax <- function(x) c(min(x),max(x))
 p <- paste0
+
+# Concact a vector automatically naming values when names are not identified
+cc <- function(...) {
+  CALL <- match.call(expand.dots = FALSE)$...
+  no.name <- names(CALL)==""
+  names(CALL)[no.name]=CALL[no.name]
+  for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[i] <- get(toString(CALL[i])))
+  CALL
+}
+
+# This function creates a named list.
+# http://stackoverflow.com/questions/16951080/can-list-objects-be-created-in-r-that-name-themselves-based-on-input-object-name/
+nl <- function(...) {
+  L <- list(...)
+  snm <- sapply(substitute(list(...)),deparse)[-1]
+  if (is.null(nm <- names(L))) nm <- snm
+  if (any(nonames <- nm=="")) nm[nonames] <- snm[nonames]
+  setNames(L,nm)
+}
 
 # HTML Objects
 
@@ -39,7 +53,6 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
   sprintf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" />',align, alt, targ, width, height)
 }
 
-
 # CSS Objects
 css.get <- function(file) {
  getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/CSS/",file,".css"), 
@@ -48,7 +61,7 @@ css.get <- function(file) {
 }
 
 css.button <- function(name="btn_name", value="Submit")
-  p("<a href='",value,"#' class='button'>",name,"</a>")
+  p("<a href='",value,"' class='button'>",name,"</a>")
 
 # rconcerto Objects
 
@@ -68,24 +81,17 @@ rconcerto.template.write <- function(template, param=list(), tag="") {
   return(html.targ[2]) # Return location of the write file
 }
 
+# Define a function to easily and uniquely generate file save locations.
+rconcerto.targ <- function(name="",sep=".") 
+  paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
+  
 # Make a facebook button that shares the link
 mk.facebook <- function(link)
   p("Share &nbsp;<a href=\"http://www.facebook.com/sharer.php?u=",link,
          "\" target=\"_blank\"><img src=\"http://g-ecx.images-amazon.com/images/G/01/askville/bs/icn-facebook.png\" 
          style=\"width: 28px; height: 28px;\" /></a>")
 
-# Define a function to easily and uniquely generate file save locations.
-rconcerto.targ <- function(name="",sep=".") 
-  paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
 
-# Concact a vector automatically naming values when names are not identified
-cc <- function(...) {
-  CALL <- match.call(expand.dots = FALSE)$...
-  no.name <- names(CALL)==""
-  names(CALL)[no.name]=CALL[no.name]
-  for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[i] <- get(toString(CALL[i])))
-  CALL
-}
 
 # Concact a list naming elements from names of elements when names are not identified
 ll <- function(...) {
@@ -221,15 +227,7 @@ rconcerto.check.show <- function(template, param=list(), vcheck="", mess="Please
 }
 
 
-# This function creates a named list.
-# http://stackoverflow.com/questions/16951080/can-list-objects-be-created-in-r-that-name-themselves-based-on-input-object-name/
-nl <- function(...) {
-  L <- list(...)
-  snm <- sapply(substitute(list(...)),deparse)[-1]
-  if (is.null(nm <- names(L))) nm <- snm
-  if (any(nonames <- nm=="")) nm[nonames] <- snm[nonames]
-  setNames(L,nm)
-}
+
 ## TESTING:
 # a <- b <- c <- 1
 # nl(a,b,c)
