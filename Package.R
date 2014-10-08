@@ -10,6 +10,7 @@
 
 phi <- (5/2)^.5       # The Golden Ratio
 minmax <- function(x) c(min(x),max(x))
+p <- paste0
 
 # HTML Objects
 
@@ -17,8 +18,8 @@ minmax <- function(x) c(min(x),max(x))
 # Options 
 html.selectfield <- function(options, rows=4, name="sel_field") {
   return <- sprintf("<select name=\"%s\" size=\"%i\">", name, rows)
-  for (i in 1:length(options)) return=paste0(return, "<option value=", i,">",options[i],"</option>")
-  paste0(return, "</select>")
+  for (i in 1:length(options)) return=p(return, "<option value=", i,">",options[i],"</option>")
+  p(return, "</select>")
 }
 
 # Highlight the text
