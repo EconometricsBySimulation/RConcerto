@@ -39,6 +39,16 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
   sprintf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" />',align, alt, targ, width, height)
 }
 
+
+# CSS Objects
+css.get <- function(file) {
+ getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/CSS/",file,".css"), 
+ followlocation = TRUE, 
+ cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+}
+
+# rconcerto Objects
+
 # A function for easily returning concerto default values to the screen.
 rconcerto.show <- function() 
   concerto.template.show(HTML=html.button(text=paste("concert:",  
