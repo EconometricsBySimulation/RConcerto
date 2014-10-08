@@ -47,7 +47,7 @@ css.get <- function(file) {
  cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 }
 
-css.button(name="btn_name", value="Submit")
+css.button <- function(name="btn_name", value="Submit")
   p("<a href='",value,"#' class='button'>",name,"</a>")
 
 # rconcerto Objects
