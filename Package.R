@@ -11,7 +11,6 @@
 phi <- (5/2)^.5       # The Golden Ratio
 minmax <- function(x) c(min(x),max(x))
 p <- paste0
-r <- print
 
 # HTML Objects
 
