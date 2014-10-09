@@ -53,7 +53,10 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
   sprintf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" />',align, alt, targ, width, height)
 }
 
-html$center <- function(x) p("<center>",x,"</center>")
+# HTML tags
+tag <- list()
+
+tag$center <- function(x) p("<center>",x,"</center>")
 
 # CSS Objects
 css.get <- function(file) {
