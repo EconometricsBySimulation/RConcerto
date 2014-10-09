@@ -8,7 +8,7 @@ input[type="submit"] {
    background: -ms-linear-gradient(top, #65a9d7, #3e779d);
    background: -o-linear-gradient(top, #65a9d7, #3e779d);
    background-image: -ms-linear-gradient(top, #65a9d7 0%, #3e779d 100%);
-   padding: 13px 26px;
+   padding: 10px 17px;
    -webkit-border-radius: 11px;
    -moz-border-radius: 11px;
    border-radius: 11px;
