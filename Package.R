@@ -41,7 +41,7 @@ html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00
 
 # Create a html button
 html.button <- function(name="btn_name", value="Submit", text="") 
-  p(text,"<input name=\"", name, "\" type=\"button\" value=\"",value,"\" />")                  
+  p(text,"<input name=\"", name, "\" type=\"submit\" value=\"",value,"\" />")                  
 
 # Insert an html image
 html.image <- function(targ, alt="", width="", height="", align="center") {
@@ -52,6 +52,8 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
   # Use sprintf to piece together the html command
   sprintf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" />',align, alt, targ, width, height)
 }
+
+html$center <- function(x) p("<center>",x,"</center>")
 
 # CSS Objects
 css.get <- function(file) {
