@@ -5,7 +5,13 @@
 
 phi <- (5/2)^.5       # The Golden Ratio
 minmax <- function(x) c(min(x),max(x))
-p <- paste0
+p <- function(...) {
+  ret <- paste0(...)
+  class(ret) <- 'html'
+  ret
+}
+
+`+.html` <- function(e1, e2) p(e1, e2)
 
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
@@ -88,6 +94,8 @@ BS$jumbotron <- function(x="") paste('<div class="jumbotron">', x, '</div>')
 BS$cj <- function(title="", ...) {
   BS$container(BS$jumbotron(p(tag$center(tag$h1(title)), p(tag$p(...), collapse=""))))
 }
+
+BS$header <- function(...) p('<div class="page-header">', p(tag$h1(...)), '</div>')
 # rconcerto Objects
 
 # A function for easily returning concerto default values to the screen.
