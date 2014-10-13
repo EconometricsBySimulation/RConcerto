@@ -89,11 +89,11 @@ BS$get <- function(x) {
  cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 }
 
-BS$head <- function(x="") paste(BS$get("head"),x,sep="\n")
-BS$tail <- function(x="") paste(x,BS$get("tail"),sep="\n")
+BS$head <- function(x="") p(BS$get("head"),x,sep="\n")
+BS$tail <- function(x="") p(x,BS$get("tail"),sep="\n")
 
-BS$container <- function(x="") paste('<div class="container theme-showcase" role="main">', x, '</div>');
-BS$jumbotron <- function(x="") paste('<div class="jumbotron">', x, '</div>');
+BS$container <- function(x="") p('<div class="container theme-showcase" role="main">', x, '</div>');
+BS$jumbotron <- function(x="") p('<div class="jumbotron">', x, '</div>');
 
 # Container jumbotron quick combo.
 BS$cj <- function(title="", ...) {
