@@ -12,10 +12,7 @@ p <- function(...) {
   ret
 }
 
-# p("hello")+p(" Bob")="Hello Bob"
-`+.html` <- function(e1, e2) p(e1, e2)
-# p("hello")^2="hellohello"
-`^.html` <- function(e1, e2) p(rep(e1, e2), collapse="")
+
 
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
