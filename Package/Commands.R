@@ -56,11 +56,11 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
 # HTML tags
 tag <- list()
 
-tag$center <- function(...) p("<center>",...,"</center>")
-tag$style  <- function(...) p('<style  type="text/css">',...,"</style>")
-tag$h1     <- function(...) p("<h1>",...,"</h1>")
-tag$p      <- function(...) p("<p>", ..., "</p>")
-tag$li     <- function(...) p("<li>",...,"</li>")
+tag$center <- function(...) p("<center>",list(...),"</center>")
+tag$style  <- function(...) p('<style  type="text/css">',list(...),"</style>")
+tag$h1     <- function(...) p("<h1>",list(...),"</h1>")
+tag$p      <- function(...) p("<p>", list(...), "</p>")
+tag$li     <- function(...) p("<li>",list(...),"</li>")
 
 # CSS Objects
 css.get <- function(x) {
@@ -86,7 +86,7 @@ BS$jumbotron <- function(x="") paste('<div class="jumbotron">', x, '</div>')
 
 # Container jumbotron quick combo.
 BS$cj <- function(title="", ...) {
-  BS$container(BS$jumbotron(p(tag$center(tag$h1(title)), tag$p(...))))
+  BS$container(BS$jumbotron(p(tag$center(tag$h1(title)), p(tag$p(...), collapse=""))))
 }
 # rconcerto Objects
 
