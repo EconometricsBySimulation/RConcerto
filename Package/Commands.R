@@ -70,7 +70,7 @@ css.get <- function(x) {
 BS <- list()
 
 BS$get <- function(x) {
- getURL(p("https://github.com/EconometricsBySimulation/RConcerto/blob/master/bootstrap/",x,".htm"), 
+ getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/bootstrap/",x,".htm"), 
  followlocation = TRUE, 
  cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 }
