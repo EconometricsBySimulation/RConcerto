@@ -86,7 +86,7 @@ BS$jumbotron <- function(x="") paste('<div class="jumbotron">', x, '</div>')
 
 # Container jumbotron quick combo.
 BS$cj <- function(title="", ...) {
-  BS$container(BS$jumbotron(p(tag$h1(title), ...)))
+  BS$container(BS$jumbotron(p(tag$center(tag$h1(title)), tag$p(...))))
 }
 # rconcerto Objects
 
