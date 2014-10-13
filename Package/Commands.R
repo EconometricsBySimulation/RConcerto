@@ -66,6 +66,16 @@ css.get <- function(file) {
  cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 }
 
+# Twitter Bootstrap Objects
+BS <- list()
+
+
+BS$get <- getURL(p("https://github.com/EconometricsBySimulation/RConcerto/blob/master/bootstrap/",file,".htm"), 
+ followlocation = TRUE, cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+
+BS$head <- function(x="") paste(BS$get("head"),x,sep="\n")
+BS$tail <- function(x="") paste(x,BS$get("tail"),sep="\n")
+
 # rconcerto Objects
 
 # A function for easily returning concerto default values to the screen.
@@ -93,7 +103,6 @@ mk.facebook <- function(link)
   p("Share &nbsp;<a href=\"http://www.facebook.com/sharer.php?u=",link,
          "\" target=\"_blank\"><img src=\"http://g-ecx.images-amazon.com/images/G/01/askville/bs/icn-facebook.png\" 
          style=\"width: 28px; height: 28px;\" /></a>")
-
 
 
 # Concact a list naming elements from names of elements when names are not identified
