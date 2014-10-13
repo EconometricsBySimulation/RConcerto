@@ -57,7 +57,10 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
 tag <- list()
 
 tag$center <- function(x) p("<center>",x,"</center>")
-tag$style <- function(x) p('<style  type="text/css">',x,"</style>")
+tag$style  <- function(x) p('<style  type="text/css">',x,"</style>")
+tag$h1     <- function(x) p("<h1>",x,"</h1>")
+tag$p      <- function(x) p("<p>", x,"</p>")
+tag$li     <- function(x) p("<li>",x,"</li>")
 
 # CSS Objects
 css.get <- function(x) {
@@ -78,6 +81,8 @@ BS$get <- function(x) {
 BS$head <- function(x="") paste(BS$get("head"),x,sep="\n")
 BS$tail <- function(x="") paste(x,BS$get("tail"),sep="\n")
 
+BS$container <- function(x="") paste(<div class="container theme-showcase" role="main">, x, </div>)
+BS$jumbotron <- function(x="") paste(<div class="jumbotron">, x, </div>)
 # rconcerto Objects
 
 # A function for easily returning concerto default values to the screen.
