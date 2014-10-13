@@ -60,8 +60,8 @@ tag$center <- function(x) p("<center>",x,"</center>")
 tag$style <- function(x) p('<style  type="text/css">',x,"</style>")
 
 # CSS Objects
-css.get <- function(file) {
- getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/CSS/",file,".css"), 
+css.get <- function(x) {
+ getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/CSS/",x,".css"), 
  followlocation = TRUE, 
  cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 }
@@ -69,8 +69,8 @@ css.get <- function(file) {
 # Twitter Bootstrap Objects
 BS <- list()
 
-
-BS$get <- getURL(p("https://github.com/EconometricsBySimulation/RConcerto/blob/master/bootstrap/",file,".htm"), 
+BS$get <- function(x) 
+ getURL(p("https://github.com/EconometricsBySimulation/RConcerto/blob/master/bootstrap/",x,".htm"), 
  followlocation = TRUE, cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 
 BS$head <- function(x="") paste(BS$get("head"),x,sep="\n")
