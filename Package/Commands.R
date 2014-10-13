@@ -4,6 +4,7 @@
 # concerto.table.query <- function(sql) print(paste0("sql=",sql))
 
 phi <- (5/2)^.5       # The Golden Ratio
+
 minmax <- function(x) c(min(x),max(x))
 p <- function(...) {
   ret <- paste0(...)
@@ -94,8 +95,9 @@ BS$container <- function(x="") paste('<div class="container theme-showcase" role
 BS$jumbotron <- function(x="") paste('<div class="jumbotron">', x, '</div>')
 
 # Container jumbotron quick combo.
-BS$cj <- function(title="", ...) 
+BS$cj <- function(title="", ...) {
   BS$container(BS$jumbotron(p(tag$center(tag$h1(title)), p(tag$p(...), collapse=""))))
+}
 
 BS$header <- function(...) p('<div class="page-header">', p(tag$h1(...)), '</div>')
 # rconcerto Objects
