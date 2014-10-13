@@ -57,7 +57,7 @@ html.image <- function(targ, alt="", width="", height="", align="center") {
 tag <- list()
 
 tag$center <- function(x) p("<center>",x,"</center>")
-tag$style <- function(x) p("<style>",x,"</style>")
+tag$style <- function(x) p('<style  type="text/css">',x,"</style>")
 
 # CSS Objects
 css.get <- function(file) {
