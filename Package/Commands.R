@@ -66,15 +66,7 @@ css.get <- function(x) {
  cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 }
 
-# Twitter Bootstrap Objects
-BS <- list()
 
-BS$get <- function(x) 
- getURL(p("https://github.com/EconometricsBySimulation/RConcerto/blob/master/bootstrap/",x,".htm"), 
- followlocation = TRUE, cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
-
-BS$head <- function(x="") paste(BS$get("head"),x,sep="\n")
-BS$tail <- function(x="") paste(x,BS$get("tail"),sep="\n")
 
 # rconcerto Objects
 
