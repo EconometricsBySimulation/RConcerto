@@ -92,15 +92,15 @@ BS$get <- function(x) {
 BS$head <- function(x="") paste(BS$get("head"),x,sep="\n")
 BS$tail <- function(x="") paste(x,BS$get("tail"),sep="\n")
 
-BS$container <- function(x="") paste('<div class="container theme-showcase" role="main">', x, '</div>')
-BS$jumbotron <- function(x="") paste('<div class="jumbotron">', x, '</div>')
+BS$container <- function(x="") paste('<div class="container theme-showcase" role="main">', x, '</div>');
+BS$jumbotron <- function(x="") paste('<div class="jumbotron">', x, '</div>');
 
 # Container jumbotron quick combo.
 BS$cj <- function(title="", ...) {
-  BS$container(BS$jumbotron(p(tag$center(tag$h1(title)), p(tag$p(...), collapse=""))))
+  BS$container(BS$jumbotron(p(tag$center(tag$h1(title)), p(tag$p(...), collapse=""))));
 }
 
-BS$header <- function(...) p('<div class="page-header">', p(tag$h1(...)), '</div>')
+BS$header <- function(...) p('<div class="page-header">', p(tag$h1(...)), '</div>');
 # rconcerto Objects
 
 # A function for easily returning concerto default values to the screen.
