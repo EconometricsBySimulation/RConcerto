@@ -14,6 +14,12 @@ recode <- function(x, m, r) {
   for (i in 1:length(m)) y[x==m[i]] <- r[i]
   y
 }
+pn <- function(...) p(..., collapse="\n")
+recode <- function(x, m, r) {
+  y <- x
+  for (i in 1:length(m)) y[x==m[i]] <- r[i]
+  y
+}
 pf <- function(x, ...) p(sprintf(x,...))
 
 
