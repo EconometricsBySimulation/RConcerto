@@ -1,22 +1,29 @@
 # RConcerto Package
-
 # concerto <- list(db=list(name="concerto4_13"), sessionID=321, userIP="34.2.3.4.564")
 # concerto.table.query <- function(sql) print(paste0("sql=",sql))
-
-phi <- (5/2)^.5       # The Golden Ratio
-
+phi <- (5/2)^.5 # The Golden Ratio
 minmax <- function(x) c(min(x),max(x))
 p <- function(...) {
   ret <- paste0(...)
   class(ret) <- 'html'
   ret
 }
+pc <- function(...) p(..., collapse="")
+recode <- function(x, m, r) {
+  y <- x
+  for (i in 1:length(m)) y[x==m[i]] <- r[i]
+  y
+}
+pf <- function(x, ...) p(sprintf(x,...))
 
+
+# Concact HTML objects
 # p("hello")+p(" Bob")="Hello Bob"
 `+.html` <- function(e1, e2) p(e1, e2)
 # p("hello")^2="hellohello"
-`^.html` <- function(e1, e2) p(rep(e1, e2), collapse="")
-
+`^.html` <- function(e1, e2) pc(rep(e1, e2))
+# Concact HTML objects collapsing vectors before combining
+`*.html` <- function(e1, e2) pc(e1)+pc(e2)
 
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
@@ -28,7 +35,6 @@ cc <- function(...) {
 }
 
 # This function creates a named list.
-# http://stackoverflow.com/questions/16951080/can-list-objects-be-created-in-r-that-name-themselves-based-on-input-object-name/
 nl <- function(...) {
   L <- list(...)
   snm <- sapply(substitute(list(...)),deparse)[-1]
@@ -36,78 +42,100 @@ nl <- function(...) {
   if (any(nonames <- nm=="")) nm[nonames] <- snm[nonames]
   setNames(L,nm)
 }
-
 # HTML Objects
-
 # HTML drop down menu object that return selections with the name sel_field by default.
-# Options 
+# Options
 html.selectfield <- function(options, rows=4, name="sel_field") {
   return <- sprintf("<select name=\"%s\" size=\"%i\">", name, rows)
   for (i in 1:length(options)) return=p(return, "<option value=", i,">",options[i],"</option>")
   p(return, "</select>")
 }
-
 # Highlight the text
 html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
-
 # Create a html button
-html.button <- function(name="btn_name", value="Submit", text="") 
-  p(text,"<input name=\"", name, "\" type=\"submit\" value=\"",value,"\" />")                  
-
+html.button <- function(name="btn_name", value="Submit", text="")
+  p(text,"<input name=\"", name, "\" type=\"submit\" value=\"",value,"\" />")
 # Insert an html image
 html.image <- function(targ, alt="", width="", height="", align="center") {
   # Modify the the width and height strings
   if ((width!="")&(height=="")) stop("Warning: Height must be specified if width is specified!")
   if (height!="") height <- sprintf('height: %spx;',height)
-  if (width!="")  width <- sprintf('width: %spx;',width)
+  if (width!="") width <- sprintf('width: %spx;',width)
   # Use sprintf to piece together the html command
   sprintf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" />',align, alt, targ, width, height)
 }
-
 # HTML tags
 tag <- list()
+tag$center    <- function(...) p("<center>",list(...),"</center>")
+tag$style     <- function(...) p('<style type="text/css">',list(...),"</style>")
+tag$h1        <- function(...) p("<h1>",list(...),"</h1>")
+tag$p         <- function(...) p("<p>", list(...), "</p>")
+tag$li        <- function(...) p("<li>",list(...),"</li>")
+tag$head      <- function(...) p("<head>", ..., "</head>")
+tag$css       <- function(href) p('<link rel="stylesheet" href="', href, '">')
+tag$script    <- function(src) p('<script src="', src, '"></script>')
+tag$comment   <- function(...) p('<!-- ', ..., ' -->')
+tag$container <- function(...) p('<div class="container">', ..., '</div>')
+tag$jumbotron <- function(...) p('<div class="jumbotron">', ..., '</div>')
+tag$none      <- function(...) p(...)
+tag$header    <- function(...) p('<div class="page-header">', ... , '</div>')
 
-tag$center <- function(...) p("<center>",list(...),"</center>")
-tag$style  <- function(...) p('<style  type="text/css">',list(...),"</style>")
-tag$h1     <- function(...) p("<h1>",list(...),"</h1>")
-tag$p      <- function(...) p("<p>", list(...), "</p>")
-tag$li     <- function(...) p("<li>",list(...),"</li>")
+tag$list      <- function(tags, ..., verbose=FALSE) {
+  # Set verbose=TRUE to check if individual tags are having issues.
+  ret <- p(...)
+  for (i in 1:length(tags)) {
+    ret <- tag[[tags[i]]](ret)
+    if (verbose) print(ret)
+  }
+  ret
+}
+
+tag$list(c('h1', 'li', 'head', 'comment'), 'test')
 
 # CSS Objects
 css.get <- function(x) {
- getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/CSS/",x,".css"), 
- followlocation = TRUE, 
- cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+  getURL(
+    pf("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/CSS/%s.css",
+       x),
+         followlocation = TRUE,
+         cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 }
 
 # Twitter Bootstrap Objects
 BS <- list()
 
-BS$get <- function(x) {
- getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/bootstrap/",x,".htm"), 
- followlocation = TRUE, 
- cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
-}
+BS$source <- function(
+  min.css = "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css",
+  theme.min.css = "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css",
+  jquery.min.js = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js",
+  min.js = "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
+) BS$SS <<- nl(min.css, theme.min.css, jquery.min.js, min.js)
+BS$source()
 
-BS$head <- function(x="") p(BS$get("head"),x,sep="\n")
-BS$tail <- function(x="") p(x,BS$get("tail"),sep="\n")
+BS$get <- function(x)
+  getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/bootstrap/",
+   x,".htm"), followlocation = TRUE,
+   cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 
-BS$container <- function(x="") p('<div class="container theme-showcase" role="main">', x, '</div>');
-BS$jumbotron <- function(x="") p('<div class="jumbotron">', x, '</div>');
+BS$head <- function() tag$head(tag$css(BS$SS$min.css)+tag$css(BS$SS$theme.min.css))+'\n\n'
+BS$tail <- function() '\n\n'+tag$script(BS$SS$jquery.min.js)+tag$script(BS$SS$min.js)
 
 # Container jumbotron quick combo.
-BS$cj <- function(title="", ...) {
-  BS$container(BS$jumbotron(p(tag$center(tag$h1(title)), p(tag$p(...), collapse=""))));
-}
+BS$cj <- function(title="", ..., tags=c('center','jumbotron','container')) 
+  tag$list(tags, tag$h1(title)*tag$p(...))
 
-BS$header <- function(...) p('<div class="page-header">', p(tag$h1(...)), '</div>');
+BS$header <- function(...) tag$header(tag$h1(...))
+
+BS$button <- 
+  function(name="default_button", value='Click', type='default', size='') 
+  pf('\n<button type="button" name="%s" class="btn %s btn-%s">%s</button>\n',
+     name, size, type, value)
+
 # rconcerto Objects
-
 # A function for easily returning concerto default values to the screen.
-rconcerto.show <- function() 
-  concerto.template.show(HTML=html.button(text=paste("concert:",  
-                         capture.output(concerto),"<br>" ,collapse="")))
-
+rconcerto.show <- function()
+  concerto.template.show(HTML=html.button(text=paste("concert:",
+                                                     capture.output(concerto),"<br>" ,collapse="")))
 # A function for creating a permenent HTML document for showing (mostly used for facebook share)
 rconcerto.template.write <- function(template, param=list(), tag="") {
   HTMLtemp <- concerto.template.get(template) # Read the template HTML information
@@ -120,15 +148,15 @@ rconcerto.template.write <- function(template, param=list(), tag="") {
 }
 
 # Define a function to easily and uniquely generate file save locations.
-rconcerto.targ <- function(name="",sep=".") 
+rconcerto.targ <- function(name="",sep=".")
   paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
-  
+
 # Make a facebook button that shares the link
 mk.facebook <- function(link)
   p("Share &nbsp;<a href=\"http://www.facebook.com/sharer.php?u=",link,
-         "\" target=\"_blank\"><img src=\"http://g-ecx.images-amazon.com/images/G/01/askville/bs/icn-facebook.png\" 
-         style=\"width: 28px; height: 28px;\" /></a>")
-
+    "\" target=\"_blank\">
+    <img src=\"http://g-ecx.images-amazon.com/images/G/01/askville/bs/icn-facebook.png\"
+    style=\"width: 28px; height: 28px;\" /></a>")
 
 # Concact a list naming elements from names of elements when names are not identified
 ll <- function(...) {
@@ -143,8 +171,8 @@ ll <- function(...) {
 rconcerto.tinsert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
   command <- sprintf("INSERT INTO `%s`.`%s` SET ", dbname, table)
   # As default, save the user IP and the sessionID
-  if (IP)  param$userIP=concerto$userIP
-  if (ID)  param$sessionID=concerto$sessionID
+  if (IP) param$userIP=concerto$userIP
+  if (ID) param$sessionID=concerto$sessionID
   if (Ver) param$version=concerto$version
   arglist <- NULL
   for (i in 1:length(param)) arglist[i] <- sprintf("`%s`='%s'", names(param)[i], param[i])
@@ -162,32 +190,29 @@ rconcerto.tselect <- function(table, order="", dbname=concerto$db$name) {
 rconcerto.dummy <- function() {
   # I am going to declare global objects that simulate the concerto objects.
   concerto <<- list(
-    testID=1, 
-    sessionID=2021, 
-    workspaceID=3, 
-    workspacePrefix="concerto4_", 
-    templateFIFOPath="/var/www/vhosts/concerto4.e-psychometrics.com/httpdocs/data/3/fifo_2", 
+    testID=1,
+    sessionID=2021,
+    workspaceID=3,
+    workspacePrefix="concerto4_",
+    templateFIFOPath="/var/www/vhosts/concerto4.e-psychometrics.com/httpdocs/data/3/fifo_2",
     sessionPath="/var/www/vhosts/concerto4.e-psychometrics.com/httpdocs/data/3/fifo_2.Rs",
-    mediaPath="/var/www/vhosts/concerto4.e-psychometrics.com/httpdocs/media/3/", 
+    mediaPath="/var/www/vhosts/concerto4.e-psychometrics.com/httpdocs/media/3/",
     userIP="12.123.123.123",
     mediaURL = "http://concerto4.e-psychometrics.com/media/3/",
     db=list(connection="<MySQLConnection:(1234,0)>",
             name="concerto4_3"))
-  
   rconcerto.template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
-  
 }
-# rconcerto.dummy()
 
-# Generate a 
+# rconcerto.dummy()
+# Generate a
 rconcerto.bell <- function(
-  thetahat=-.25,                       # Default is about 43%
+  thetahat=-.25, # Default is about 43%
   targ=paste(sample(letters, 10, replace=T), collapse=""), # Generate a random letter string
-  saveplot=T,                          # Save the plot is standard 
-  col=c(grey(.4),grey(.8)),            # Change colors to shades of grey
-  width=600,                           # Specify the width of the plot
+  saveplot=T, # Save the plot is standard
+  col=c(grey(.4),grey(.8)), # Change colors to shades of grey
+  width=600, # Specify the width of the plot
   main="You scored better than %s%% of those taking this test.") {
-  
   # If plot is enabled plot open a dev.
   if (saveplot) {
     save_target <- rconcerto.targ(paste0(name=targ, ".png"))
@@ -210,26 +235,24 @@ rconcerto.bell <- function(
   polygon(c(-4,fullrange,4),c(0,pfullrange,0), lwd=3, col=grey(.4))
   # Plot the range covered by the person
   polygon(c(-4,thetarange,max(thetarange)),c(0,pthetarange,0), lwd=3, col=grey(.8))
-  
   if (saveplot) {
     dev.off()
     return(save_target[2])
   }
 }
+
 # graph1 <- rconcerto.bell()
-
-
 # Evaluate code directly from a dropbox file
 dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
   require(RCurl)
   # Load the file into memory as a text file with getURL
-  intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x), 
+  intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x),
                    ssl.verifypeer = FALSE)
-  # For some reason \r seem to be frequently inserted into 
-  #   the script files that I save.  They present a problem
-  #   so I remove them using gsub.
+  # For some reason \r seem to be frequently inserted into
+  # the script files that I save. They present a problem
+  # so I remove them using gsub.
   intext <- gsub("\r","", intext)
-  # First do some error checking.  Count the number of {} and () to see if they match.
+  # First do some error checking. Count the number of {} and () to see if they match.
   checks <- c("(", ")", "{", "{")
   nchecks <- NA
   for (i in 1:length(checks)) nchecks[i]<-(nchar(gsub(sprintf("[^%s]", checks[i]),"",intext)))
@@ -247,14 +270,15 @@ dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
 }
 
 # dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
-
-# This function acts much the same as concerto.template.show except that it requires one or more values from the template to be evaluated
-rconcerto.check.show <- function(template, param=list(), vcheck="", mess="Please check the box to continue.") {
+# This function acts much the same as concerto.template.show except that it requires 
+# one or more values from the template to be evaluated
+rconcerto.check.show <- function(template, param=list(), vcheck="", 
+                                 mess="Please check the box to continue.") {
   # Set these two values to be empty
-  returner <- list();  usermess <- "" 
+  returner <- list(); usermess <- ""
   # This provides an infinite loop until the user satisfies the condition of the check box being clicked.
   while (is.null(returner[[vcheck]])) {
-    returner <- concerto.template.show(template, 
+    returner <- concerto.template.show(template,
                                        param=c(param, vcheck=usermess))
     # Send the user the need to check the box message.
     usermess <- html.highlight(mess)
@@ -265,8 +289,6 @@ rconcerto.check.show <- function(template, param=list(), vcheck="", mess="Please
 
 
 
-## TESTING:
-# a <- b <- c <- 1
-# nl(a,b,c)
-# nl(a,b,d=c)
-# nl(e=a,f=b,d=c)
+
+### TESTING
+
