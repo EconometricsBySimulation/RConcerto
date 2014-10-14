@@ -104,12 +104,22 @@ css.get <- function(x) {
 # Twitter Bootstrap Objects
 BS <- list()
 
-BS$source <- function(
-  min.css = "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css",
-  theme.min.css = "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css",
-  jquery.min.js = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js",
-  min.js = "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
-) BS$SS <<- nl(min.css, theme.min.css, jquery.min.js, min.js)
+BS$source <- function(theme='default') {
+if (theme=='default') {
+  min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+  theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
+}
+if (theme=='slate'|theme=='amelia'|theme=='darkly'|theme=='flatly'|theme=='superhero'|
+    theme=='spacelab'|theme=='yeti') {
+  root <- p('https://raw.githubusercontent.com/thomaspark/bootswatch/gh-pages/', theme)
+  min.css <- p(root, "bootstrap.css")
+  theme.min.css <- p(root,"bootstrap.min.css")
+}
+  jquery.min.js <- "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+  min.js <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
+
+BS$SS <<- nl(min.css, theme.min.css, jquery.min.js, min.js)
+}
 BS$source()
 
 BS$get <- function(x)
