@@ -69,6 +69,7 @@ tag <- list()
 tag$center    <- function(...) p("<center>",list(...),"</center>")
 tag$style     <- function(...) p('<style type="text/css">',list(...),"</style>")
 tag$h1        <- function(...) p("<h1>",list(...),"</h1>")
+tag$h2        <- function(...) p("<h2>",list(...),"</h2>")
 tag$p         <- function(...) p("<p>", list(...), "</p>")
 tag$li        <- function(...) p("<li>",list(...),"</li>")
 tag$head      <- function(...) p("<head>", ..., "</head>")
@@ -107,13 +108,12 @@ BS <- list()
 BS$source <- function(theme='default') {
 if (theme=='default') {
   min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
-}
-if (theme=='slate'|theme=='amelia'|theme=='darkly'|theme=='flatly'|theme=='superhero'|
-    theme=='spacelab'|theme=='yeti') {
-  root <- p('https://raw.githubusercontent.com/thomaspark/bootswatch/gh-pages/', theme)
-  min.css <- p(root, "/bootstrap.css")
-}
   theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
+}
+if (theme!='default') {
+  min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+  theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
+}
   jquery.min.js <- "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
   min.js <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
 
@@ -131,7 +131,7 @@ BS$tail <- function() '\n\n'+tag$script(BS$SS$jquery.min.js)+tag$script(BS$SS$mi
 
 # Container jumbotron quick combo.
 BS$cj <- function(title="", ..., tags=c('center','jumbotron','container')) 
-  tag$list(tags, tag$h1(title)*tag$p(...))
+  tag$list(tags, tag$h2(title)*tag$p(...))
 
 BS$header <- function(...) tag$header(tag$h1(...))
 
