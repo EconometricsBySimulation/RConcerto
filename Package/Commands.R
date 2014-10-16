@@ -167,7 +167,7 @@ BS$RespButton <- function(resp, collapse="") {
   # Feed in a vector in of possible responses
   ir <- (resp)[resp!='']
   # Code responses from 1 to N
-#  responses <<- p('R',1:length(ir))
+  #  responses <<- p('R',1:length(ir))
   responses <<- 1:length(ir)
   # Select shortcut keys
   shortAns  <<- disp$btn.short[1:length(ir)]
