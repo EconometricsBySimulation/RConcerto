@@ -372,7 +372,7 @@ build$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE){
       
       if (theme) body <- body+
         tag$p('Themes From ' + tag$a('Bootswatch', 'http://bootswatch.com/'))+
-        tag$p(pn(BS$button(bootswatch, bootswatch, disp$btn.col, 'btn-xs')))+
+        tag$p(pn(BS$button(bootswatch, bootswatch, build$disp$btn.col, 'btn-xs')))+
       
       body <- body+
         tag$p('Revert to Default')
@@ -404,8 +404,8 @@ build$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE){
       # Return to default
       if (response == 'bootstrap.theme') {
         BS$source(build$disp$theme<<-'bootstrap.theme')
-        disp$btn.col  <<- 'primary'
-        disp$btn.size <<- ''
+        build$disp$btn.col  <<- 'primary'
+        build$disp$btn.size <<- ''
       }
     }
 }
