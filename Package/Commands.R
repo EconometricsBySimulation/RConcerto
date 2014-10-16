@@ -80,7 +80,8 @@ tag$p         <- function(...) p("<p>", list(...), "</p>")
 tag$li        <- function(...) p("<li>",list(...),"</li>")
 tag$head      <- function(...) p("<head>", ..., "</head>")
 tag$css       <- function(href) p('<link rel="stylesheet" href="', href, '">')
-tag$script    <- function(src) p('<script src="', src, '"></script>')
+tag$script    <- function(...) p('<script>', ..., '"></script>')
+tag$sscript    <- function(src) p('<script src="', src, '"></script>')
 tag$comment   <- function(...) p('<!-- ', ..., ' -->')
 tag$container <- function(...) p('<div class="container">', ..., '</div>')
 tag$jumbotron <- function(...) p('<div class="jumbotron">', ..., '</div>')
@@ -134,7 +135,7 @@ BS$get <- function(x)
    cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 
 BS$head <- function() tag$head(tag$css(BS$SS$min.css)+tag$css(BS$SS$theme.min.css))+'\n\n'
-BS$tail <- function() '\n\n'+tag$script(BS$SS$jquery.min.js)+tag$script(BS$SS$min.js)
+BS$tail <- function() '\n\n'+tag$sscript(BS$SS$jquery.min.js)+tag$sscript(BS$SS$min.js)
 
 # Container jumbotron quick combo.
 BS$cj <- function(title="", ..., tags=c('center','jumbotron','container')) 
@@ -143,9 +144,10 @@ BS$cj <- function(title="", ..., tags=c('center','jumbotron','container'))
 BS$header <- function(...) tag$header(tag$h1(...))
 
 BS$button <- 
-  function(name="default_button", value='Click', type='default', size='') 
+  function(name="default_button", value='Click', type='default', size='') {
   pf('\n<button type="button" name="%s" class="btn %s btn-%s">%s</button>\n',
      name, size, type, value)
+  }
 
 # rconcerto Objects
 # A function for easily returning concerto default values to the screen.
