@@ -122,7 +122,7 @@ if (theme=='bootstrap.theme') {
   min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
   theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
 }
-if (theme!='bootstrap.theme') {
+if (theme!='default') {
   min.css <- pf("http://bootswatch.com/%s/bootstrap.css", theme)
   theme.min.css <- pf("http://bootswatch.com/%s/bootswatch.css", theme)
 }
@@ -179,7 +179,7 @@ disp <-list(
  # Set default displays
   btn.col='primary',       #button type
   btn.size='',             #button size
-  theme='bootstrap.theme', #boostrap theme
+  theme='default',         #default boostrap theme
   btn.short=c('a','s','d','f','g','h','j','k'), #button access keys.
  # Set the set of available options
   btn.size.names=c('Large', 'Regular', 'Small', 'Very Small'),
