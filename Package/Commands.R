@@ -86,7 +86,7 @@ tag$container <- function(...) p('<div class="container">', ..., '</div>')
 tag$jumbotron <- function(...) p('<div class="jumbotron">', ..., '</div>')
 tag$none      <- function(...) p(...)
 tag$header    <- function(...) p('<div class="page-header">', ... , '</div>')
-tag$a         <- function(x, href) pf('<a href="%s">%s</a>', href, a)
+tag$a         <- function(x, href) pf('<a href="%s">%s</a>', href, x)
 
 tag$list      <- function(tags, ..., verbose=FALSE) {
   # Set verbose=TRUE to check if individual tags are having issues.
