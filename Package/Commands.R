@@ -340,7 +340,7 @@ build$RespButton <- function(resp) {
   # Code responses from 1 to N
   responses <<- p('R',1:length(ir))
   # Select shortcut keys
-  shortAns  <<- disp$btn.short[1:length(ir)]
+  shortAns  <<- build$disp$btn.short[1:length(ir)]
 
   pc(BS$button(
   build$responses, 
