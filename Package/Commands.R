@@ -150,7 +150,7 @@ BS$button <-
     accesskey <- pf(' accesskey="%s"',accesskey)
   }
   pf('\n<button type="button" name="%s" class="btn %s btn-%s"%s>%s</button>\n',
-     name, size, type, value, accesskey)
+     name, size, type, accesskey, value)
   }
 
 # rconcerto Objects
