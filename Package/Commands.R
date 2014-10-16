@@ -117,8 +117,8 @@ if (theme=='bootstrap.theme') {
   theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
 }
 if (theme!='bootstrap.theme') {
-  min.css <- pf("http://bootswatch.com/%s/bootstrap.css", bootstrap.theme)
-  theme.min.css <- pf("http://bootswatch.com/%s/bootswatch.css", bootstrap.theme)
+  min.css <- pf("http://bootswatch.com/%s/bootstrap.css", theme)
+  theme.min.css <- pf("http://bootswatch.com/%s/bootswatch.css", theme)
 }
   jquery.min.js <- "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
   min.js <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
