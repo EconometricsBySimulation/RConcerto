@@ -117,19 +117,23 @@ css.get <- function(x) {
 # Twitter Bootstrap Objects
 BS <- list()
 
-(BS$source <- function(theme='default') {
+BS$source <- function(theme='default') {
   min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
   theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
   css2 <- css3 <- ''
+  jquery.min.js <- "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+  min.js <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
+  
+  
 if (theme!='default') {
   css2 <- pf("http://bootswatch.com/%s/bootstrap.css", theme)
   css3 <- pf("http://bootswatch.com/%s/bootswatch.css", theme)
 }
-  jquery.min.js <- "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
-  min.js <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
+
 
 BS$SS <<- nl(min.css, theme.min.css, css2, css3, jquery.min.js, min.js)
-})()
+}
+BS$source()
 
 BS$get <- function(x)
   getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/bootstrap/",
