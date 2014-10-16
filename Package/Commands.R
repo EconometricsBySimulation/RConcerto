@@ -157,6 +157,41 @@ BS$button <-
      name, size, type, accesskey, value)
   }
 
+# Highest level functions are builds
+BS$RespButton <- function(resp, collapse="") {
+  # Takes a vector of possible responses and returns a button set.
+  
+  # Feed in a vector in of possible responses
+  ir <- (resp)[resp!='']
+  # Code responses from 1 to N
+  responses <<- p('R',1:length(ir))
+  # Select shortcut keys
+  shortAns  <<- disp$btn.short[1:length(ir)]
+  
+  p(BS$button(responses, ir, disp$btn.col, disp$btn.size, shortAns), 
+    collapse=collapse)
+}
+
+disp <-list(
+ # Set default displays
+  btn.col='primary',       #button type
+  btn.size='',             #button size
+  theme='bootstrap.theme', #boostrap theme
+  btn.short=c('a','s','d','f','g','h','j','k') #button access keys.
+ # Set the set of available options
+  btn.size.names=c('Large', 'Regular', 'Small', 'Very Small'),
+  btn.size.type=c('btn-lg', '', 'btn-sm', 'btn-xs'),
+  btn.col.type=c('primary', 'success', 'info', 'warning', 'danger', 'default'),
+  btn.col.names=1:6,
+  bootswatch = c('cerulean','cosmo', 'cyborg', 'darkly', 'flatly', 'journal', 
+                 'lumen', 'paper', 'readable', 'sandstone', 'simplex',
+                 'slate', 'spacelab', 'superhero', 'united', 'yeti'),
+  btn.short.set=list(
+               c('a','s','d','f','g','h','j','k'),
+               c('q','w','e','r','t','y','u','i'),
+               c('z','x','c','v','b','n','m',','),
+               1:8))
+
 # rconcerto Objects
 # A function for easily returning concerto default values to the screen.
 rconcerto.show <- function()
