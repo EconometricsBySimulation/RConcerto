@@ -111,14 +111,14 @@ css.get <- function(x) {
 # Twitter Bootstrap Objects
 BS <- list()
 
-BS$source <- function(theme='default') {
-if (theme=='default') {
+BS$source <- function(theme='bootstrap.theme') {
+if (theme=='bootstrap.theme') {
   min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
   theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
 }
-if (theme!='default') {
-  min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
-  theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
+if (theme!='bootstrap.theme') {
+  min.css <- pf("http://bootswatch.com/%s/bootstrap.css", bootstrap.theme)
+  theme.min.css <- pf("http://bootswatch.com/%s/bootswatch.css", bootstrap.theme)
 }
   jquery.min.js <- "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
   min.js <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
