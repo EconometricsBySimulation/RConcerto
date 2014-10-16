@@ -1,4 +1,6 @@
-build <- list(btn.col='primary', btn.size='', theme='bootstrap.theme',
+build <- list()
+
+build$disp <-list(btn.col='primary', btn.size='', theme='bootstrap.theme',
              btn.size.names=c('Large', 'Regular', 'Small', 'Very Small'),
              btn.size.type=c('btn-lg', '', 'btn-sm', 'btn-xs'),
              btn.col.type=c('primary', 'success', 'info', 'warning', 'danger', 'default'),
@@ -14,19 +16,30 @@ build <- list(btn.col='primary', btn.size='', theme='bootstrap.theme',
                         1:8),
              btn.short=c('a','s','d','f','g','h','j','k'))
 
-BS$source(disp$theme)
+BS$source(build$disp$theme)
 
-build$prepare <- function(answer='') {
+build$preResp <- function(resp) {
   # Feed in a vector of possible responses.
   # Drop empty values.
-  ir <- (iResp[i,])[iResp[i,]!='']
-  # Code responses from 1 to N
-  build$responses <<- p('R',1:length(ir))
-  # Select shortcut keys
-  build$shortAns  <<- disp$btn.short[1:length(ir)]
 }
 
-build$stylize <- function(theme=TRUE, size=TRUE, col=TRUE){
+build$RespButton <- function(resp) {
+# Feed in a vector in of possible responses
+  ir <- (resp)[resp!='']
+  # Code responses from 1 to N
+  responses <<- p('R',1:length(ir))
+  # Select shortcut keys
+  shortAns  <<- disp$btn.short[1:length(ir)]
+
+  pc(BS$button(
+  build$responses, 
+  build$ir, 
+  build$btn.col, 
+  build$btn.size, 
+  build$btn.shortcut))
+}
+
+build$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE){
   repeat {
       body <- ''
       
