@@ -146,7 +146,7 @@ BS$header <- function(...) tag$header(tag$h1(...))
 BS$button <- 
   function(name="default_button", value='Click', type='default', size='', accesskey='', keyhint=TRUE) {
   if (accesskey!='') {
-    if (keyhint) value <- p(value,'(',accesskey,')')
+    if (keyhint) value <- p(value,' (',accesskey,')')
     accesskey <- pf(' accesskey="%s"',accesskey)
   }
   pf('\n<button type="button" name="%s" class="btn %s btn-%s"%s>%s</button>\n',
