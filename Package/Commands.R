@@ -120,7 +120,7 @@ BS <- list()
 BS$source <- function(theme='default') {
   min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
   theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
-  css2 <- cs3 <- ''
+  css2 <- css3 <- ''
 if (theme!='default') {
   css2 <- pf("http://bootswatch.com/%s/bootstrap.css", theme)
   css3 <- pf("http://bootswatch.com/%s/bootswatch.css", theme)
