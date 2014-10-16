@@ -148,10 +148,15 @@ BS$cj <- function(title="", ..., tags=c('center','jumbotron','container'))
 BS$header <- function(...) tag$header(tag$h1(...))
 
 BS$button <- 
+# Defines a set of buttons which return value
+# 
   function(name="default_button", value='Click', type='default', size='', accesskey='', keyhint=TRUE) {
-  if (length(accesskey)>0) accesskey[accesskey!=''] <- pf(' accesskey="%s"', accesskey[accesskey!=''])
-  pf('\n<button type="button" name="%s" class="btn %s btn-%s"%s>%s</button>\n',
-     name, size, type, accesskey, value)
+    if (length(accesskey)>0) {
+      value[accesskey!=''] <- p(value, ' (', accesskey[accesskey!=''], ')')
+      accesskey[accesskey!=''] <- pf(' accesskey="%s"', accesskey[accesskey!=''])
+    }
+    pf('\n<button type="button" name="%s" class="btn %s btn-%s"%s>%s</button>\n',
+       name, size, type, accesskey, value)
   }
 
 # Highest level functions are builds
@@ -161,7 +166,8 @@ BS$RespButton <- function(resp, collapse="") {
   # Feed in a vector in of possible responses
   ir <- (resp)[resp!='']
   # Code responses from 1 to N
-  responses <<- p('R',1:length(ir))
+#  responses <<- p('R',1:length(ir))
+  responses <<- 1:length(ir)
   # Select shortcut keys
   shortAns  <<- disp$btn.short[1:length(ir)]
   
