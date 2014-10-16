@@ -80,7 +80,10 @@ tag$h3        <- function(...) p("<h3>",list(...),"</h3>")
 tag$h4        <- function(...) p("<h4>",list(...),"</h4>")
 tag$h5        <- function(...) p("<h5>",list(...),"</h5>")
 tag$h6        <- function(...) p("<h6>",list(...),"</h6>")
-tag$p         <- function(...) p("<p>", list(...), "</p>")
+tag$p         <- function(..., align='') {
+  if (align!='')  pf('<p align="%s">%s</p>"', align, list(...))
+  if (align=='')  pf('<p>%s</p>"', list(...))
+}
 tag$li        <- function(...) p("<li>",list(...),"</li>")
 tag$head      <- function(...) p("<head>", ..., "</head>")
 tag$css       <- function(...) p('<link rel="stylesheet" href="', list(...), '">')
