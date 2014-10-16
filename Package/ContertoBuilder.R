@@ -16,13 +16,6 @@ build$disp <-list(btn.col='primary', btn.size='', theme='bootstrap.theme',
                         1:8),
              btn.short=c('a','s','d','f','g','h','j','k'))
 
-BS$source(build$disp$theme)
-
-build$preResp <- function(resp) {
-  # Feed in a vector of possible responses.
-  # Drop empty values.
-}
-
 build$RespButton <- function(resp) {
 # Feed in a vector in of possible responses
   ir <- (resp)[resp!='']
@@ -41,26 +34,40 @@ build$RespButton <- function(resp) {
 
 build$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE){
   repeat {
+  # Define the body of the container
       body <- ''
       
       if (size) body <- body+
         tag$p('Button Size')+
-        tag$p(pn(BS$button(btn.size.names, btn.size.names, disp$btn.col, btn.size.type)))
+        tag$p(pn(BS$button(build$disp$btn.size.names, 
+                           build$disp$btn.size.names, 
+                           build$disp$btn.col, 
+                           build$disp$btn.size.type)))
         
       
+      if (col) body <- body+
         tag$p('Button Color')+
-        tag$p(pn(BS$button(btn.col.names, btn.col.names, btn.col.type, disp$btn.size)))+
+        tag$p(pn(BS$button(build$disp$btn.col.names, 
+                           build$disp$btn.col.names, 
+                           build$disp$btn.col.type, 
+                           build$disp$btn.size)))+
+      
+      if (theme) body <- body+
         tag$p('Themes From ' + tag$a('Bootswatch', 'http://bootswatch.com/'))+
         tag$p(pn(BS$button(bootswatch, bootswatch, disp$btn.col, 'btn-xs')))+
-        tag$p('Revert to Default')+
+      
+      body <- body+
+        tag$p('Revert to Default')
         BS$button('bootstrap.theme', 'Default', 'primary', '')
         
+    # Defne the contents of the container    
       contents <- 
         tag$header(tag$h2("PersonalityPulse.com: Style Selector"))+
         BS$cj("", body)+
         tag$h2('All Done')+
-        tag$p(BS$button('done', 'Return to Test', disp$btn.col, disp$btn.size))
-      
+        tag$p(BS$button('done', 'Return to Test', build$disp$btn.col, build$disp$btn.size))
+    
+    # Define that which will be passed to the viewer
       StyleSelect <- BS$head()+tag$container(contents)
         
       # Display style selector
@@ -69,18 +76,18 @@ build$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE){
       if (response == 'done') break()
                                              
       if (response %in% btn.size.names) 
-        disp$btn.size <- btn.size.type[btn.size.names==response]
+        build$disp$btn.size <<- build$disp$btn.size.type[build$disp$btn.size.names==response]
       
-      if (response %in% btn.col.names)
-        disp$btn.col <- btn.col.type[btn.col.names==response]
+      if (response %in% build$disp$btn.col.names)
+        build$disp$btn.col <<- build$disp$btn.col.type[build$disp$btn.col.names==response]
       
-      if (response %in% bootswatch) BS$source(disp$theme<-response)
+      if (response %in% bootswatch) BS$source(build$disp$theme<-response)
 
       # Return to default
       if (response == 'bootstrap.theme') {
-        BS$source(disp$theme<<-'bootstrap.theme')
-        disp$btn.col  <- 'primary'
-        disp$btn.size <- ''
+        BS$source(build$disp$theme<<-'bootstrap.theme')
+        disp$btn.col  <<- 'primary'
+        disp$btn.size <<- ''
       }
     }
 }
