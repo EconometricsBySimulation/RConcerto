@@ -131,7 +131,7 @@ if (theme!='bootstrap.theme') {
 
 BS$SS <<- nl(min.css, theme.min.css, jquery.min.js, min.js)
 }
-BS$source()
+# BS$source()
 
 BS$get <- function(x)
   getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/bootstrap/",
