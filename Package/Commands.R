@@ -139,7 +139,7 @@ BS$get <- function(x)
    x,".htm"), followlocation = TRUE,
    cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 
-BS$head <- function() tag$head(pc(tag$css(BS$SS$min.css, BS$SS$theme.min.css, css2, css3)))+'\n\n'
+BS$head <- function() tag$head(pc(tag$css(BS$SS$min.css, BS$SS$theme.min.css, BS$SS$css2, BS$SS$css3)))+'\n\n'
 BS$tail <- function() '\n\n'+tag$sscript(BS$SS$jquery.min.js)+tag$sscript(BS$SS$min.js)
 
 # Container jumbotron quick combo.
