@@ -177,7 +177,7 @@ disp <-list(
   btn.col='primary',       #button type
   btn.size='',             #button size
   theme='bootstrap.theme', #boostrap theme
-  btn.short=c('a','s','d','f','g','h','j','k') #button access keys.
+  btn.short=c('a','s','d','f','g','h','j','k'), #button access keys.
  # Set the set of available options
   btn.size.names=c('Large', 'Regular', 'Small', 'Very Small'),
   btn.size.type=c('btn-lg', '', 'btn-sm', 'btn-xs'),
