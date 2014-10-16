@@ -117,19 +117,20 @@ css.get <- function(x) {
 # Twitter Bootstrap Objects
 BS <- list()
 
-BS$source <- function(theme='bootstrap.theme') {
-if (theme=='default') {
+BS$source <- function(theme='default') {
   min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
   theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
+if (theme!='default') {
+  css2 <- c33 <- ''
 }
 if (theme!='default') {
-  min.css <- pf("http://bootswatch.com/%s/bootstrap.css", theme)
-  theme.min.css <- pf("http://bootswatch.com/%s/bootswatch.css", theme)
+  css2 <- pf("http://bootswatch.com/%s/bootstrap.css", theme)
+  css3 <- pf("http://bootswatch.com/%s/bootswatch.css", theme)
 }
   jquery.min.js <- "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
   min.js <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
 
-BS$SS <<- nl(min.css, theme.min.css, jquery.min.js, min.js)
+BS$SS <<- nl(min.css, theme.min.css, css2, css3, jquery.min.js, min.js)
 }
 BS$source()
 
@@ -138,7 +139,7 @@ BS$get <- function(x)
    x,".htm"), followlocation = TRUE,
    cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 
-BS$head <- function() tag$head(tag$css(BS$SS$min.css)+tag$css(BS$SS$theme.min.css))+'\n\n'
+BS$head <- function() tag$head(pc(tag$css(BS$SS$min.css, BS$SS$theme.min.css, css2, css3)))+'\n\n'
 BS$tail <- function() '\n\n'+tag$sscript(BS$SS$jquery.min.js)+tag$sscript(BS$SS$min.js)
 
 # Container jumbotron quick combo.
