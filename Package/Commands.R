@@ -87,8 +87,7 @@ tag$p         <- function(..., align='') {
 tag$li        <- function(...) p("<li>",list(...),"</li>")
 tag$head      <- function(...) p("<head>", ..., "</head>")
 tag$css       <- function(...) p('<link rel="stylesheet" href="', list(...), '">')
-tag$script    <- function(...) p('<script>', list(...), '"></script>')
-tag$sscript   <- function(...) p('<script src="', ..., '"></script>')
+tag$script    <- function(..., scr='') p('<script src="%s">%s</script>',scr,...)
 tag$comment   <- function(...) p('<!-- ', ..., ' -->')
 tag$container <- function(...) p('<div class="container">', ..., '</div>')
 tag$jumbotron <- function(...) p('<div class="jumbotron">', ..., '</div>')
@@ -144,7 +143,7 @@ BS$get <- function(x)
    cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 
 BS$head <- function() tag$head(pc(tag$css(BS$SS$min.css, BS$SS$theme.min.css, BS$SS$css2, BS$SS$css3)))+'\n\n'
-BS$tail <- function() '\n\n'+tag$sscript(BS$SS$jquery.min.js)+tag$sscript(BS$SS$min.js)
+BS$tail <- function() '\n\n'+tag$script(scr=c(BS$SS$jquery.min.js,BS$SS$min.js))
 
 # Container jumbotron quick combo.
 BS$cj <- function(title="", ..., tags=c('center','jumbotron','container')) 
