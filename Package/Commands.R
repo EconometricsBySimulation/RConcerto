@@ -209,6 +209,101 @@ BS$RespButton <- function(resp, collapse="") {
     collapse=collapse)
 }
 
+BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
+  repeat {
+    # Define the body of the container
+    body <- '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">'
+    body <- ''
+    
+    if (size) body <- body+tag$h4('Button Size')+
+      tag$p(pn(BS$button(name=disp$btn.size.names, 
+                         value=disp$btn.size.names, 
+                         type=disp$btn.col, 
+                         size=disp$btn.size.type)))
+    
+    
+    if (col) body <- body+
+      tag$h4('Button Color')+
+      tag$p(pn(BS$button(name=disp$btn.col.names, 
+                         value=disp$btn.col.names, 
+                         type=disp$btn.col.type, 
+                         size=disp$btn.size)))
+    
+    if (theme) {
+      # Identify current color
+      current.col <- (1:length(disp$btn.col.type))[disp$btn.col==disp$btn.col.type]
+      # Find next color
+      next.col    <- (current.col %% length(disp$btn.col.type)) + 1
+      # Create a vector of colors for the themes
+      btn.col <- rep(disp$btn.col, length(disp$bootswatch))
+      # Replace the current theme color with a different color
+      # btn.col[disp$bootswatch==disp$theme] <- next.col
+      btn.col[disp$bootswatch==disp$theme] <- ''
+      
+      body <- body+
+        tag$h4('Themes From ' + tag$a('Bootswatch', 'http://bootswatch.com/')) +
+        tag$p(pn(BS$button(name=disp$bootswatch,
+                           value=disp$bootswatch, 
+                           type=btn.col, 
+                           size='btn-xs')))
+     }
+    
+    # Shortcut key selector
+     if (key) {
+       key.choice <- sapply(disp$btn.short.set, pc)
+       key.name   <- p('key', 1:length(key.choice))
+       btn.col    <- rep(disp$btn.col, length(key.choice))
+       btn.col[key.choice==pc(disp$btn.short)] <- ''
+       
+       body <- body+
+         tag$h4('Select Shortcut Key Set')+
+         tag$p(pn(BS$button(name=key.name,
+                            value=key.choice, 
+                            type=btn.col, 
+                            size=disp$btn.size)))
+         
+     }
+    
+    
+    # Defne the contents of the container    
+    contents <- 
+      tag$header(tag$h2("PersonalityPulse.com: Style Selector"))+
+      tag$center(body)+'<hr>'+
+      tag$p(BS$button('done', 'Return to Test', disp$btn.col, disp$btn.size) +
+      BS$button('default', 'Revert to Default', type=disp$btn.col, size=disp$btn.size))
+    
+    # Define that which will be passed to the viewer
+    StyleSelect <- BS$head()+tag$container(contents)
+    
+    # Display style selector
+    response <- concerto.template.show(HTML=StyleSelect)$LAST_PRESSED_BUTTON_NAME
+    
+    if (response == 'done') break()
+    
+    if (response %in% disp$btn.size.names) 
+      disp$btn.size <<- disp$btn.size.type[disp$btn.size.names==response]
+    
+    if (response %in% disp$btn.col.names)
+      disp$btn.col <<- disp$btn.col.type[disp$btn.col.names==response]
+    
+    if (response %in% disp$bootswatch) BS$source(disp$theme<<-response)
+    
+    if (substr(response, 1,3)=='key') {
+      key <- as.numeric(substr(response, 4,5))
+      disp$btn.short <<- disp$btn.short.set[[key]]
+    }
+    
+    # Return to default
+    if (response == 'default') {
+      BS$source(disp$theme<<-'bootstrap.theme')
+      disp$btn.col   <<- 'primary'
+      disp$btn.size  <<- ''
+      disp$btn.short <<- disp$btn.short.set[[1]]
+    }
+  }
+}
+
+
 disp <-list(
  # Set default displays
   btn.col='primary',       #button type
