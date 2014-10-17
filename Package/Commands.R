@@ -168,7 +168,7 @@ BS$panel <-
 # Defines a set of buttons which returns the name, displays the value
 # Type is its color (primary, success, info, warning, danger, default)
 # size it's size ('btn-lg', '', 'btn-sm', 'btn-xs')
-  function(head="default_button", body='Click', type='default') {
+  function(head="Panel Head", body='Panel Body', type='default') {
     pf('<div class="panel panel-%s">', type)+'\n'+
     '<h3 class="panel-heading">'+head+'</h3>'+'\n'+
     '<div class="panel-body">'+body+'</h3>'+'</div>'+'\n'
