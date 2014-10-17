@@ -84,7 +84,6 @@ tag$p         <- function(..., align='') {
   if (align!='')  pf('<p align="%s">%s</p>', align, list(...))
   if (align=='')  pf('<p>%s</p>', list(...))
 }
-tag$li        <- function(...) p("<li>",list(...),"</li>")
 tag$head      <- function(...) p("<head>", ..., "</head>")
 tag$css       <- function(...) p('<link rel="stylesheet" href="', list(...), '">')
 tag$script    <- function(..., scr='') p('<script src="%s">%s</script>',scr,...)
@@ -96,7 +95,10 @@ tag$header    <- function(...) p('<div class="page-header">', ... , '</div>')
 tag$a         <- function(x, href) pf('<a href="%s">%s</a>', href, x)
 tag$row       <- function(...) p('<div class="row">\n', pn(...) ,'</div><!--End Row-->\n')
 tag$col       <- function(..., size=4) pf('<div class="col-sm-%s">\n%s</div><!--End Col-->\n', size, pn(...)) 
-
+tag$li <- function(..., active=FALSE) {
+  if (!active) return(pf('<li>%s</li>', list(...)))
+  pf('<li class="active">%s</li>', list(...))
+}
 
 tag$list      <- function(tags, ..., verbose=FALSE) {
   # Set verbose=TRUE to check if individual tags are having issues.
@@ -129,14 +131,11 @@ BS$source <- function(theme='default') {
   jquery.min.js <- "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
   min.js <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
   
-  
-if (theme!='default') {
-  css2 <- pf("http://bootswatch.com/%s/bootstrap.css", theme)
-  css3 <- pf("http://bootswatch.com/%s/bootswatch.css", theme)
-}
-
-
-BS$SS <<- nl(min.css, theme.min.css, css2, css3, jquery.min.js, min.js)
+  if (theme!='default') {
+    css2 <- pf("http://bootswatch.com/%s/bootstrap.css", theme)
+    css3 <- pf("http://bootswatch.com/%s/bootswatch.css", theme)
+  }
+  BS$SS <<- nl(min.css, theme.min.css, css2, css3, jquery.min.js, min.js)
 }
 BS$source()
 
@@ -208,6 +207,27 @@ BS$RespButton <- function(resp, collapse="") {
   p(BS$button(responses, ir, disp$btn.col, disp$btn.size, shortAns), 
     collapse=collapse)
 }
+
+BS$a <- function(name='Default_link', value='Link')
+  pf('<a href="#" onclick="test.submit(\'%s\')">%s</a>', name, value)
+
+
+BS$top.navbar <- function(title='', name=NULL, value=NULL, active=1) {
+  
+  pass.links <- ''
+  if (length(name)>0) {
+    pass.links <- p('<li><a href="#" ', BS$a(name,value), '</li>')
+    pass.links[active] <- 
+      p('<li class="active">', BS$a(name[active],value[active]), '</li>')
+  }
+  
+  p('<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">',
+     '<div class="container">\n<div class="header">',
+     '<a class="navbar-brand" href="#">', title, 
+     '</a></div>\n<ul class="nav navbar-nav">')+
+     pc(pass.links)+'</ul>\n</div>\n</div>'
+}
+
 
 BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
   repeat {
