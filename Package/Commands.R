@@ -25,7 +25,7 @@ pf <- function(x, ...) p(sprintf(x,...))
 
 # Concact HTML objects
 # p("hello")+p(" Bob")="Hello Bob"
-`+.html` <- function(e1, e2) p(e1, e2)
+`+.html` <- function(...) p(...)
 # p("hello")^2="hellohello"
 `^.html` <- function(e1, e2) pc(rep(e1, e2))
 # Concact HTML objects collapsing vectors before combining
@@ -167,6 +167,19 @@ BS$button <-
     pf('\n<button type="button" name="%s" class="btn %s btn-%s"%s>%s</button>\n',
        name, size, type, accesskey, value)
   }
+
+# Create a textual input object. Left and right addons will cause the input box to span entire width
+# as well as create textual clues.
+BS$Tinput <- function(name, placeholder, type='text', left.addon=NULL, right.addon=NULL){
+  left <- right <- p('')
+  if (length(left.addon)>0) 
+    left <- pf('<span class="input-group-addon">%s</span>\n', left.addon)
+  if (length(right.addon)>0) 
+      right <- pf('<span class="input-group-addon">%s</span>\n', right.addon)
+  center <- pf('<input name="%s" type="%s" class="form-control" placeholder="%s">', 
+               name, type, placeholder)
+  pf('<div class="input-group">\n%s\n</div>\n',left+center+right)
+}
   
 BS$panel <-
   # Defines a set of buttons which returns the name, displays the value
