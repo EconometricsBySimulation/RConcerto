@@ -94,6 +94,9 @@ tag$jumbotron <- function(...) p('<div class="jumbotron">', ..., '</div>')
 tag$none      <- function(...) p(...)
 tag$header    <- function(...) p('<div class="page-header">', ... , '</div>')
 tag$a         <- function(x, href) pf('<a href="%s">%s</a>', href, x)
+tag$row       <- function(...) p('<div class="row">\n', pn(...) ,'</div><!--End Row-->\n')
+tag$col       <- function(..., size=4) pf('<div class="col-sm-%s">\n%s</div><!--End Col-->\n', size, pn(...)) 
+
 
 tag$list      <- function(tags, ..., verbose=FALSE) {
   # Set verbose=TRUE to check if individual tags are having issues.
@@ -146,8 +149,10 @@ BS$head <- function() tag$head(pc(tag$css(BS$SS$min.css, BS$SS$theme.min.css, BS
 BS$tail <- function() '\n\n'+tag$script(scr=c(BS$SS$jquery.min.js,BS$SS$min.js))
 
 # Container jumbotron quick combo.
-BS$cj <- function(title="", ..., tags=c('center','jumbotron','container')) 
-  tag$list(tags, tag$h2(title)*tag$p(...))
+BS$cj <- function(..., title="", tags=c('center','jumbotron','container')) {
+  if (title!="") return(tag$list(tags, tag$h2(title)*tag$p(...)))
+  return(tag$list(tags, pc(tag$p(...))))
+  }
 
 BS$header <- function(...) tag$header(tag$h1(...))
 
@@ -164,15 +169,29 @@ BS$button <-
        name, size, type, accesskey, value)
   }
   
-BS$panel <- 
-# Defines a set of buttons which returns the name, displays the value
-# Type is its color (primary, success, info, warning, danger, default)
-# size it's size ('btn-lg', '', 'btn-sm', 'btn-xs')
-  function(head="Panel Head", body='Panel Body', type='default') {
-    pf('<div class="panel panel-%s">', type)+'\n'+
-    '<h3 class="panel-heading">'+head+'</h3>'+'\n'+
-    '<div class="panel-body">'+body+'</h3>'+'</div>'+'\n'
+BS$panel <-
+  # Defines a set of buttons which returns the name, displays the value
+  # Type is its color (primary, success, info, warning, danger, default)
+  # size it's size ('btn-lg', '', 'btn-sm', 'btn-xs')
+  function(head="Panel Heading", body='Panel Body', type='default') {
+    pf('<div class="panel panel-%s">\n', type)+
+      '<div class="panel panel-heading"><h3 class="panel-title">\n'+
+      head+'\n</h3></div><!--Panel Heading-->\n'+
+      '<div class="panel-body">\n'+body+'\n</div><!--Close Body-->\n'+
+      '</div><!--Close Panel-->\n'
   }
+  
+# Use row, col, panel combinations to create stacked panels
+# 1 | 2
+# - - -
+# 3 | 4
+
+#tag$row(tag$col(BS$panel('Panel 1'), 
+#                BS$panel('Panel 2', 'Body', 'primary')),
+#        tag$col(BS$panel('Panel 3', BS$button(), 'info'), 
+#                BS$panel('Panel 4', 'Body', 'warning')))
+
+
 
 # Highest level functions are builds
 BS$RespButton <- function(resp, collapse="") {
