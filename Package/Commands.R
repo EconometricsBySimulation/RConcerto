@@ -152,8 +152,9 @@ BS$cj <- function(title="", ..., tags=c('center','jumbotron','container'))
 BS$header <- function(...) tag$header(tag$h1(...))
 
 BS$button <- 
-# Defines a set of buttons which return value
-# 
+# Defines a set of buttons which returns the name, displays the value
+# Type is its color (primary, success, info, warning, danger, default)
+# size it's size ('btn-lg', '', 'btn-sm', 'btn-xs')
   function(name="default_button", value='Click', type='default', size='', accesskey='', keyhint=TRUE) {
     if (length(accesskey)>0) {
       value[accesskey!=''] <- p(value, ' (', accesskey[accesskey!=''], ')')
@@ -161,6 +162,16 @@ BS$button <-
     }
     pf('\n<button type="button" name="%s" class="btn %s btn-%s"%s>%s</button>\n',
        name, size, type, accesskey, value)
+  }
+  
+BS$panel <- 
+# Defines a set of buttons which returns the name, displays the value
+# Type is its color (primary, success, info, warning, danger, default)
+# size it's size ('btn-lg', '', 'btn-sm', 'btn-xs')
+  function(head="default_button", body='Click', type='default') {
+    pf('<div class="panel panel-%s">', type)+'\n'+
+    '<h3 class="panel-heading">'+head+'</h3>'+'\n'+
+    '<div class="panel-body">'+body+'</h3>'+'</div>'+'\n'
   }
 
 # Highest level functions are builds
