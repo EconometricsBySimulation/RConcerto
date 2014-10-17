@@ -211,17 +211,18 @@ BS$RespButton <- function(resp, collapse="") {
 
 BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
   repeat {
+  ### HTML Build
     # Define the body of the container
-    body <- '<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">'
     body <- ''
     
+    # If select button size is an option
     if (size) body <- body+tag$h4('Button Size')+
       tag$p(pn(BS$button(name=disp$btn.size.names, 
                          value=disp$btn.size.names, 
                          type=disp$btn.col, 
                          size=disp$btn.size.type)))
     
-    
+    # If select color is an option
     if (col) body <- body+
       tag$h4('Button Color')+
       tag$p(pn(BS$button(name=disp$btn.col.names, 
@@ -229,6 +230,7 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
                          type=disp$btn.col.type, 
                          size=disp$btn.size)))
     
+    # If select theme is an option
     if (theme) {
       # Identify current color
       current.col <- (1:length(disp$btn.col.type))[disp$btn.col==disp$btn.col.type]
@@ -248,7 +250,7 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
                            size='btn-xs')))
      }
     
-    # Shortcut key selector
+    # If shortcut key select is an option
      if (key) {
        key.choice <- sapply(disp$btn.short.set, pc)
        key.name   <- p('key', 1:length(key.choice))
@@ -263,8 +265,7 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
                             size=disp$btn.size)))
          
      }
-    
-    
+     
     # Defne the contents of the container    
     contents <- 
       tag$header(tag$h2("PersonalityPulse.com: Style Selector"))+
@@ -272,22 +273,29 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
       tag$p(BS$button('done', 'Return to Test', disp$btn.col, disp$btn.size) +
       BS$button('default', 'Revert to Default', type=disp$btn.col, size=disp$btn.size))
     
-    # Define that which will be passed to the viewer
+    # Define that which will be passed to the browser
     StyleSelect <- BS$head()+tag$container(contents)
     
-    # Display style selector
+  ### Call HTML
     response <- concerto.template.show(HTML=StyleSelect)$LAST_PRESSED_BUTTON_NAME
     
+  ### Define termination conditions
     if (response == 'done') break()
     
+  ### Define other events
+  
+    # Change size
     if (response %in% disp$btn.size.names) 
       disp$btn.size <<- disp$btn.size.type[disp$btn.size.names==response]
     
+    # Change color
     if (response %in% disp$btn.col.names)
       disp$btn.col <<- disp$btn.col.type[disp$btn.col.names==response]
     
+    # Change theme
     if (response %in% disp$bootswatch) BS$source(disp$theme<<-response)
     
+    # Change access keys
     if (substr(response, 1,3)=='key') {
       key <- as.numeric(substr(response, 4,5))
       disp$btn.short <<- disp$btn.short.set[[key]]
@@ -300,7 +308,7 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
       disp$btn.size  <<- ''
       disp$btn.short <<- disp$btn.short.set[[1]]
     }
-  }
+  } # End repeat
 }
 
 
