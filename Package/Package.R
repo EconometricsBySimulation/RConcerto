@@ -7,19 +7,22 @@ p <- function(...) {
   ret <- paste0(...)
   class(ret) <- 'html'
   ret
-}
+};
+
 pc <- function(...) p(..., collapse="")
 recode <- function(x, m, r) {
   y <- x
   for (i in 1:length(m)) y[x==m[i]] <- r[i]
   y
-}
+};
+
 pn <- function(...) p(..., collapse="\n")
 recode <- function(x, m, r) {
   y <- x
   for (i in 1:length(m)) y[x==m[i]] <- r[i]
   y
-}
+};
+
 pf <- function(x, ...) p(sprintf(x,...))
 
 
@@ -38,7 +41,7 @@ cc <- function(...) {
   names(CALL)[no.name]=CALL[no.name]
   for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[i] <- get(toString(CALL[i])))
   CALL
-}
+};
 
 # This function creates a named list.
 nl <- function(...) {
@@ -47,7 +50,8 @@ nl <- function(...) {
   if (is.null(nm <- names(L))) nm <- snm
   if (any(nonames <- nm=="")) nm[nonames] <- snm[nonames]
   setNames(L,nm)
-}
+};
+
 # HTML Objects
 # HTML drop down menu object that return selections with the name sel_field by default.
 # Options
@@ -55,7 +59,8 @@ html.selectfield <- function(options, rows=4, name="sel_field") {
   return <- sprintf("<select name=\"%s\" size=\"%i\">", name, rows)
   for (i in 1:length(options)) return=p(return, "<option value=", i,">",options[i],"</option>")
   p(return, "</select>")
-}
+};
+
 # Highlight the text
 html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
 # Create a html button
