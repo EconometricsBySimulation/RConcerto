@@ -89,6 +89,10 @@ tag$p         <- function(..., align='') {
   if (align!='')  pf('<p align="%s">%s</p>', align, list(...))
   if (align=='')  pf('<p>%s</p>', list(...))
 }
+tag$pn         <- function(..., align='') {
+  if (align!='')  pn(pf('<p align="%s">%s</p>', align, list(...)))
+  if (align=='')  pn(pf('<p>%s</p>', list(...)))
+}
 tag$head      <- function(...) p("<head>", ..., "</head>")
 tag$css       <- function(...) p('<link rel="stylesheet" href="', list(...), '">')
 tag$script    <- function(..., scr='') p('<script src="%s">%s</script>',scr,...)
