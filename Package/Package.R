@@ -7,21 +7,21 @@ p <- function(...) {
   ret <- paste0(...)
   class(ret) <- 'html'
   ret
-};
+}
 
 pc <- function(...) p(..., collapse="")
 recode <- function(x, m, r) {
   y <- x
   for (i in 1:length(m)) y[x==m[i]] <- r[i]
   y
-};
+}
 
 pn <- function(...) p(..., collapse="\n")
 recode <- function(x, m, r) {
   y <- x
   for (i in 1:length(m)) y[x==m[i]] <- r[i]
   y
-};
+}
 
 pf <- function(x, ...) p(sprintf(x,...))
 
@@ -166,7 +166,7 @@ BS$button <-
 # size it's size ('btn-lg', '', 'btn-sm', 'btn-xs')
   function(name="default_button", value='Click', type=NULL, size=NULL, accesskey='', keyhint=TRUE) {
     if (length(type)==0) type <- disp$btn.col
-    if (length(size)==0) type <- disp$btn.size
+    if (length(size)==0) size <- disp$btn.size
     
     if (length(accesskey)>0) {
       value[accesskey!=''] <- p(value, ' (', accesskey[accesskey!=''], ')')
