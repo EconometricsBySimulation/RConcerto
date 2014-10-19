@@ -197,7 +197,8 @@ BS$panel <-
   # Defines a set of buttons which returns the name, displays the value
   # Type is its color (primary, success, info, warning, danger, default)
   # size it's size ('btn-lg', '', 'btn-sm', 'btn-xs')
-  function(head="Panel Heading", body='Panel Body', type='default') {
+  function(head="Panel Heading", body='Panel Body', type=NULL) {
+    if (length(type)==0) type <- disp$btn.col
     pf('<div class="panel panel-%s">\n', type)+
       '<div class="panel panel-heading"><h3 class="panel-title">\n'+
       head+'\n</h3></div><!--Panel Heading-->\n'+
