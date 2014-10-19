@@ -159,7 +159,10 @@ BS$button <-
 # Defines a set of buttons which returns the name, displays the value
 # Type is its color (primary, success, info, warning, danger, default)
 # size it's size ('btn-lg', '', 'btn-sm', 'btn-xs')
-  function(name="default_button", value='Click', type='default', size='', accesskey='', keyhint=TRUE) {
+  function(name="default_button", value='Click', type=NULL, size=NULL, accesskey='', keyhint=TRUE) {
+    if (length(type)==0) type <- disp$btn.col
+    if (length(size)==0) type <- disp$btn.size
+    
     if (length(accesskey)>0) {
       value[accesskey!=''] <- p(value, ' (', accesskey[accesskey!=''], ')')
       accesskey[accesskey!=''] <- pf(' accesskey="%s"', accesskey[accesskey!=''])
@@ -217,7 +220,7 @@ BS$RespButton <- function(resp, collapse="") {
   # Select shortcut keys
   shortAns  <<- disp$btn.short[1:length(ir)]
   
-  p(BS$button(responses, ir, disp$btn.col, disp$btn.size, shortAns), 
+  p(BS$button(responses, ir, accesskey=shortAns), 
     collapse=collapse)
 }
 
@@ -252,7 +255,6 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
     if (size) body <- body+tag$h4('Button Size')+
       tag$p(pn(BS$button(name=disp$btn.size.names, 
                          value=disp$btn.size.names, 
-                         type=disp$btn.col, 
                          size=disp$btn.size.type)))
     
     # If select color is an option
@@ -260,8 +262,7 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
       tag$h4('Button Color')+
       tag$p(pn(BS$button(name=disp$btn.col.names, 
                          value=disp$btn.col.names, 
-                         type=disp$btn.col.type, 
-                         size=disp$btn.size)))
+                         type=disp$btn.col.type)))
     
     # If select theme is an option
     if (theme) {
@@ -294,8 +295,7 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
          tag$h4('Select Shortcut Key Set')+
          tag$p(pn(BS$button(name=key.name,
                             value=key.choice, 
-                            type=btn.col, 
-                            size=disp$btn.size)))
+                            type=btn.col)))
          
      }
      
@@ -303,8 +303,8 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
     contents <- 
       tag$header(tag$h2("PersonalityPulse.com: Style Selector"))+
       tag$center(body)+'<hr>'+
-      tag$p(BS$button('done', 'Return to Test', disp$btn.col, disp$btn.size) +
-      BS$button('default', 'Revert to Default', type=disp$btn.col, size=disp$btn.size))
+      tag$p(BS$button('done', 'Return to Test') +
+      BS$button('default', 'Revert to Default'))
     
     # Define that which will be passed to the browser
     StyleSelect <- BS$head()+tag$container(contents)
