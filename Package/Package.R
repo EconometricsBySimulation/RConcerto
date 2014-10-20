@@ -339,9 +339,9 @@ rconcerto.tinsert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T,
 
 # A wrapper for inserting values into a MySQL table.
 rconcerto.Update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name ) {
-  Update  <- pf("UPDATE `%s`.`%s`\n SET", dbname, table)
+  Update  <- pf("UPDATE `%s`.`%s` SET", dbname, table)
   Set     <- p(pf("`%s`='%s'", names(param), param), collapse=',')
-  Where   <- p("\nWHERE ", p(pf("`%s`=`%s`", names(cond), cond), collapse=','))
+  Where   <- p("WHERE ", p(pf("`%s`=`%s`", names(cond), cond), collapse=','))
 
   concerto.table.query(sql=paste(Update,Set,Where))
 }
