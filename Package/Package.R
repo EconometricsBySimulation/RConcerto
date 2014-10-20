@@ -299,7 +299,7 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
       tag$header(tag$h2("PersonalityPulse.com: Style Selector"))+
       tag$center(body)+'<hr>'+
       tag$p(BS$button('done', 'Return to Test') +
-      BS$button('default', 'Revert to Default'))
+      BS$button('default', 'Revert to Default', 'warning'))
     
     # Define that which will be passed to the browser
     StyleSelect <- BS$head()+tag$container(contents)
