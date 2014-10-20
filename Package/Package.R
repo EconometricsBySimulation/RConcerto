@@ -356,7 +356,6 @@ BS$top.navbar <- function(title='', name=NULL, value=NULL, active=1) {
      pc(pass.links)+'</ul>\n</div>\n</div>'
 }
 
-print('test')
 disp <-list(
  # Set default displays
   btn.col='primary',       #button type
