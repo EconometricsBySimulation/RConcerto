@@ -362,6 +362,7 @@ disp <-list(
   btn.size='',             #button size
   theme='default',         #default boostrap theme
   btn.short=c('a','s','d','f','g','h','j','k'), #button access keys.
+  return.message='Return to Test'
  # Set the set of available options
   btn.size.names=c('Large', 'Regular', 'Small', 'Very Small'),
   btn.size.type=c('btn-lg', '', 'btn-sm', 'btn-xs'),
