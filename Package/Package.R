@@ -136,6 +136,8 @@ BS <- list()
 BS$a <- function(name='Default_link', value='Link')
   pf('<a href="#" onclick="test.submit(\'%s\')">%s</a>', name, value)
 
+BS$alert <- function(..., type='warning') pf('<div class="alert alert-%s" role="alert">%s</div>', type, list(...))
+
 # Container jumbotron quick combo.
 BS$cj <- function(..., title="", tags=c('center','jumbotron','container')) {
   if (title!="") return(tag$list(tags, tag$h2(title)*tag$p(...)))
