@@ -164,6 +164,7 @@ BS$source <- function(theme='default') {
   }
   BS$SS <<- nl(min.css, theme.min.css, css2, css3, jquery.min.js, min.js)
 }
+BS$source()
 
 BS$button <- 
 # Defines a set of buttons which returns the name, displays the value
