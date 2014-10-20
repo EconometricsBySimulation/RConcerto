@@ -133,6 +133,24 @@ css.get <- function(x) {
 # Twitter Bootstrap Objects
 BS <- list()
 
+BS$a <- function(name='Default_link', value='Link')
+  pf('<a href="#" onclick="test.submit(\'%s\')">%s</a>', name, value)
+
+# Container jumbotron quick combo.
+BS$cj <- function(..., title="", tags=c('center','jumbotron','container')) {
+  if (title!="") return(tag$list(tags, tag$h2(title)*tag$p(...)))
+  return(tag$list(tags, pc(tag$p(...))))
+  }
+
+BS$get <- function(x)
+  getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/bootstrap/",
+   x,".htm"), followlocation = TRUE,
+   cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+
+BS$glyph <- function(x) pf('<span class="glyphicon glyphicon-%s"></span>', x)
+
+BS$head <- function() tag$head(pc(tag$css(BS$SS$min.css, BS$SS$theme.min.css, BS$SS$css2, BS$SS$css3)))+'\n\n'
+
 BS$source <- function(theme='default') {
   min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
   theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
@@ -146,23 +164,6 @@ BS$source <- function(theme='default') {
   }
   BS$SS <<- nl(min.css, theme.min.css, css2, css3, jquery.min.js, min.js)
 }
-BS$source()
-
-BS$get <- function(x)
-  getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/bootstrap/",
-   x,".htm"), followlocation = TRUE,
-   cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
-
-BS$head <- function() tag$head(pc(tag$css(BS$SS$min.css, BS$SS$theme.min.css, BS$SS$css2, BS$SS$css3)))+'\n\n'
-BS$tail <- function() '\n\n'+tag$script(scr=c(BS$SS$jquery.min.js,BS$SS$min.js))
-
-# Container jumbotron quick combo.
-BS$cj <- function(..., title="", tags=c('center','jumbotron','container')) {
-  if (title!="") return(tag$list(tags, tag$h2(title)*tag$p(...)))
-  return(tag$list(tags, pc(tag$p(...))))
-  }
-
-BS$header <- function(...) tag$header(tag$h1(...))
 
 BS$button <- 
 # Defines a set of buttons which returns the name, displays the value
@@ -178,7 +179,10 @@ BS$button <-
     }
     pf('\n<button type="button" name="%s" class="btn %s btn-%s"%s>%s</button>\n',
        name, size, type, accesskey, value)
-  }
+}
+
+BS$header <- function(...) tag$header(tag$h1(...))
+
 
 # Create a textual input object. Left and right addons will cause the input box to span entire width
 # as well as create textual clues.
@@ -218,6 +222,7 @@ BS$panel <-
 
 
 
+
 # Highest level functions are builds
 BS$RespButton <- function(resp, collapse="") {
   # Takes a vector of possible responses and returns a button set.
@@ -233,29 +238,6 @@ BS$RespButton <- function(resp, collapse="") {
   p(BS$button(responses, ir, accesskey=shortAns), 
     collapse=collapse)
 }
-
-BS$a <- function(name='Default_link', value='Link')
-  pf('<a href="#" onclick="test.submit(\'%s\')">%s</a>', name, value)
-
-
-BS$top.navbar <- function(title='', name=NULL, value=NULL, active=1) {
-  
-  pass.links <- ''
-  if (length(name)>0) {
-    pass.links <- p('<li><a href="#" ', BS$a(name,value), '</li>')
-    pass.links[active] <- 
-      p('<li class="active">', BS$a(name[active],value[active]), '</li>')
-  }
-  
-  p('<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">',
-     '<div class="container">\n<div class="header">',
-     '<a class="navbar-brand" href="#">', title, 
-     '</a></div>\n<ul class="nav navbar-nav">')+
-     pc(pass.links)+'</ul>\n</div>\n</div>'
-}
-
-BS$glyph <- function(x) pf('span class="glyphicon glyphicon-%s"></span>', x)
-
 
 BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
   repeat {
@@ -356,6 +338,22 @@ BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
   } # End repeat
 }
 
+
+BS$top.navbar <- function(title='', name=NULL, value=NULL, active=1) {
+  
+  pass.links <- ''
+  if (length(name)>0) {
+    pass.links <- p('<li><a href="#" ', BS$a(name,value), '</li>')
+    pass.links[active] <- 
+      p('<li class="active">', BS$a(name[active],value[active]), '</li>')
+  }
+  
+  p('<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">',
+     '<div class="container">\n<div class="header">',
+     '<a class="navbar-brand" href="#">', title, 
+     '</a></div>\n<ul class="nav navbar-nav">')+
+     pc(pass.links)+'</ul>\n</div>\n</div>'
+}
 
 disp <-list(
  # Set default displays
