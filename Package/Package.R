@@ -254,6 +254,8 @@ BS$top.navbar <- function(title='', name=NULL, value=NULL, active=1) {
      pc(pass.links)+'</ul>\n</div>\n</div>'
 }
 
+BS$glyph <- function(x) pf('span class="glyphicon glyphicon-%s"></span>', x)
+
 
 BS$stylizer <- function(theme=TRUE, size=TRUE, col=TRUE, key=TRUE){
   repeat {
