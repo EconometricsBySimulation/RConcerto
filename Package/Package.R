@@ -206,7 +206,8 @@ BS$Ttext <- function(x, type='text', left.addon=NULL, right.addon=NULL){
     left <- pf('<span class="input-group-addon">%s</span>\n', left.addon)
   if (length(right.addon)>0) 
       right <- pf('<span class="input-group-addon">%s</span>\n', right.addon)
-  pf('<div class="input-group">\n%s\n</div>\n',left+x+right)
+  center <- pf('<span class="form-control">%s</span>', x)
+  pf('<div class="input-group">\n%s\n</div>\n',left+center+right)
 }
   
 BS$panel <-
