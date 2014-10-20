@@ -199,6 +199,15 @@ BS$Tinput <- function(name, placeholder, type='text', left.addon=NULL, right.add
                name, type, placeholder)
   pf('<div class="input-group">\n%s\n</div>\n',left+center+right)
 }
+
+BS$Ttext <- function(x, type='text', left.addon=NULL, right.addon=NULL){
+  left <- right <- p('')
+  if (length(left.addon)>0) 
+    left <- pf('<span class="input-group-addon">%s</span>\n', left.addon)
+  if (length(right.addon)>0) 
+      right <- pf('<span class="input-group-addon">%s</span>\n', right.addon)
+  pf('<div class="input-group">\n%s\n</div>\n',left+x+right)
+}
   
 BS$panel <-
   # Defines a set of buttons which returns the name, displays the value
