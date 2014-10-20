@@ -289,25 +289,6 @@ disp <-list(
                c('z','x','c','v','b','n','m',','),
                1:8))
 
-# rconcerto Objects
-# A function for easily returning concerto default values to the screen.
-rconcerto.show <- function()
-  concerto.template.show(HTML=html.button(text=paste("concert:",
-                                                     capture.output(concerto),"<br>" ,collapse="")))
-# A function for creating a permenent HTML document for showing (mostly used for facebook share)
-rconcerto.template.write <- function(template, param=list(), tag="") {
-  HTMLtemp <- concerto.template.get(template) # Read the template HTML information
-  HTMLtemp <- concerto.template.fillHTML(HTMLtemp, param) # Replace parameter information
-  html.targ <- rconcerto.targ(paste0(tag,template,".HTML"))
-  fileConn<-file(html.targ[1]) # Open a connection to a write file
-  writeLines(HTMLtemp, fileConn) # Write HTML to file
-  close(fileConn) # Close file
-  return(html.targ[2]) # Return location of the write file
-}
-
-# Define a function to easily and uniquely generate file save locations.
-rconcerto.targ <- function(name="",sep=".")
-  paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
 
 # Make a facebook button that shares the link
 mk.facebook <- function(link)
@@ -325,8 +306,30 @@ ll <- function(...) {
   CALL
 }
 
+rconcerto <- list()
+
+# rconcerto Objects
+# A function for easily returning concerto default values to the screen.
+rconcerto$show <- function()
+  concerto.template.show(HTML=html.button(text=paste("concert:",
+                                                     capture.output(concerto),"<br>" ,collapse="")))
+# A function for creating a permenent HTML document for showing (mostly used for facebook share)
+rconcerto$template.write <- function(template, param=list(), tag="") {
+  HTMLtemp <- concerto.template.get(template) # Read the template HTML information
+  HTMLtemp <- concerto.template.fillHTML(HTMLtemp, param) # Replace parameter information
+  html.targ <- rconcerto$targ(paste0(tag,template,".HTML"))
+  fileConn<-file(html.targ[1]) # Open a connection to a write file
+  writeLines(HTMLtemp, fileConn) # Write HTML to file
+  close(fileConn) # Close file
+  return(html.targ[2]) # Return location of the write file
+}
+
+# Define a function to easily and uniquely generate file save locations.
+rconcerto$targ <- function(name="",sep=".")
+  paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
+
 # A wrapper for inserting values into a MySQL table.
-rconcerto.tinsert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
+rconcerto$tinsert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
   command <- sprintf("INSERT INTO `%s`.`%s` SET ", dbname, table)
   # As default, save the user IP and the sessionID
   if (IP) param$userIP=concerto$userIP
@@ -338,23 +341,22 @@ rconcerto.tinsert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T,
 }
 
 # A wrapper for inserting values into a MySQL table.
-rconcerto.Update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name ) {
-  Update  <- pf("UPDATE `%s`.`%s` SET", dbname, table)
-  Set     <- p(pf("`%s`='%s'", names(param), param), collapse=',')
-  Where   <- p("WHERE ", p(pf("`%s`=`%s`", names(cond), cond), collapse=','))
-
+rconcerto$Update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name ) {
+  Update <- pf("UPDATE `%s`.`%s` SET", dbname, table)
+  Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
+  Where <- p("WHERE ", p(pf("`%s`='%s'", names(cond), cond), collapse=','))
   concerto.table.query(sql=paste(Update,Set,Where))
 }
 
 # A wrapper for selecting (loading values from) a my SQL table.
-rconcerto.tselect <- function(table, order="", dbname=concerto$db$name) {
+rconcerto$tselect <- function(table, order="", dbname=concerto$db$name) {
   command <- sprintf("SELECT * FROM `%s`.`%s`", dbname, table)
   if (order!="") order <- sprintf(" ORDER BY `%s` ASC", order)
   concerto.table.query(sql=paste0(command, order))
 }
 
 # Function. Set dummy parameters for test running concerto code on the desktop R package.
-rconcerto.dummy <- function() {
+rconcerto$dummy <- function() {
   # I am going to declare global objects that simulate the concerto objects.
   concerto <<- list(
     testID=1,
@@ -368,12 +370,12 @@ rconcerto.dummy <- function() {
     mediaURL = "http://concerto4.e-psychometrics.com/media/3/",
     db=list(connection="<MySQLConnection:(1234,0)>",
             name="concerto4_3"))
-  rconcerto.template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
+  rconcerto$template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
 }
 
-# rconcerto.dummy()
+# rconcerto$dummy()
 # Generate a
-rconcerto.bell <- function(
+rconcerto$bell <- function(
   thetahat=-.25, # Default is about 43%
   targ=paste(sample(letters, 10, replace=T), collapse=""), # Generate a random letter string
   saveplot=T, # Save the plot is standard
@@ -382,7 +384,7 @@ rconcerto.bell <- function(
   main="You scored better than %s%% of those taking this test.") {
   # If plot is enabled plot open a dev.
   if (saveplot) {
-    save_target <- rconcerto.targ(paste0(name=targ, ".png"))
+    save_target <- rconcerto$targ(paste0(name=targ, ".png"))
     png(file=save_target[1], width = width, height = width/phi)
     print(paste("Graph saved to", save_target[2]))
   }
@@ -408,9 +410,9 @@ rconcerto.bell <- function(
   }
 }
 
-# graph1 <- rconcerto.bell()
+# graph1 <- rconcerto$bell()
 # Evaluate code directly from a dropbox file
-dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
+dropbox$eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
   require(RCurl)
   # Load the file into memory as a text file with getURL
   intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x),
@@ -439,7 +441,7 @@ dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
 # dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
 # This function acts much the same as concerto.template.show except that it requires 
 # one or more values from the template to be evaluated
-rconcerto.check.show <- function(template, param=list(), vcheck="", 
+rconcerto$check.show <- function(template, param=list(), vcheck="", 
                                  mess="Please check the box to continue.") {
   # Set these two values to be empty
   returner <- list(); usermess <- ""
@@ -454,8 +456,4 @@ rconcerto.check.show <- function(template, param=list(), vcheck="",
   returner
 }
 
-
-
-
 ### TESTING
-
