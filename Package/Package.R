@@ -2,7 +2,9 @@
 # concerto <- list(db=list(name="concerto4_13"), sessionID=321, userIP="34.2.3.4.564")
 # concerto.table.query <- function(sql) print(paste0("sql=",sql))
 phi <- (5/2)^.5 # The Golden Ratio
+
 minmax <- function(x) c(min(x),max(x))
+
 p <- function(...) {
   ret <- paste0(...)
   class(ret) <- 'html'
@@ -33,6 +35,8 @@ pf <- function(x, ...) p(sprintf(x,...))
 `^.html` <- function(e1, e2) pc(rep(e1, e2))
 # Concact HTML objects collapsing vectors before combining
 `*.html` <- function(e1, e2) pc(e1)+pc(e2)
+
+`&.html` <- function(e1, e2) pn(e1,'<br>',e2)
 
 # Concact a vector automatically naming values when names are not identified
 cc <- function(...) {
