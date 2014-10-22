@@ -204,12 +204,16 @@ BS$Tinput <- function(name, placeholder, type='text', left.addon=NULL, right.add
   pf('<div class="input-group">\n%s\n</div>\n',left+center+right)
 }
 
-BS$Ttext <- function(x, type='text', left.addon=NULL, right.addon=NULL){
+BS$Ttext <- function(x, type='text', left.addon=NULL, left.button=NULL, right.addon=NULL, right.button=NULL){
   left <- right <- p('')
+  if (length(left.button)>0) 
+    left <- left + pf('<span class="input-group-btn">%s</span>\n', left.button)
   if (length(left.addon)>0) 
-    left <- pf('<span class="input-group-addon">%s</span>\n', left.addon)
+    left <- left + pf('<span class="input-group-addon">%s</span>\n', left.addon)
   if (length(right.addon)>0) 
-      right <- pf('<span class="input-group-addon">%s</span>\n', right.addon)
+    right <- right + pf('<span class="input-group-addon">%s</span>\n', right.addon)
+  if (length(right.button)>0) 
+    right <- right + pf('<span class="input-group-btn">%s</span>\n', right.button)
   center <- pf('<span class="form-control">%s</span>', x)
   pf('<div class="input-group">\n%s\n</div>\n',left+center+right)
 }
