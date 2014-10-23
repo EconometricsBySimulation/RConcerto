@@ -367,10 +367,19 @@ ninja$build <- function(html, ...) {
   r0  
 }
 
+# Suitable for filling in missing values
 ninja$dsub <- function(x, y, con='') {
     yn <- names(y)
     tf <- !sapply(x[yn], is.null)&(x[yn]==con)
     x[yn[tf]] <- y[tf]
+  x
+}
+
+# Suitable for replacing all values
+ninja$lsub <- function(x, y) {
+  yn <- names(y)
+  tf <- !sapply(x[yn], is.null)
+  x[yn[tf]] <- y[tf]
   x
 }
 
