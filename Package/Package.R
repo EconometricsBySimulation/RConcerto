@@ -359,11 +359,13 @@ rweb$disp <- function(x=concerto)
   concerto.template.show(HTML=html.button(text=p(pn(as.list(match.call())),
                                                      capture.output(x),"<br>" ,collapse="")))
 
-rweb$html <- function(html, ...) {
+rweb$build <- function(html, ...) {
   r0 <- concerto.template.show(HTML=html, ...)
   r0$LPB <- r0$LAST_PRESSED_BUTTON_NAME
   r0$OT  <- r0$OUT_OF_TIME
-  r0
+  r0$TT  <- r0$TIME_TAKEN
+  resp  
+}
 
 # A function for creating a permenent HTML document for showing (mostly used for facebook share)
 rweb$template.write <- function(template, param=list(), tag="") {
