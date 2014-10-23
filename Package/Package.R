@@ -140,7 +140,7 @@ BS <- list()
 BS$a <- function(name='Default_link', value='Link')
   pf('<a href="#" onclick="test.submit(\'%s\')">%s</a>', name, value)
 
-BS$alert <- function(..., type='warning') pf('<div class="alert alert-%s" role="alert">%s</div>', type, list(...))
+BS$alert <- function(x, type='warning') pf('<div class="alert alert-%s" role="alert">%s</div>', type, x)
 
 # Container jumbotron quick combo.
 BS$cj <- function(..., title="", tags=c('center','jumbotron','container')) {
