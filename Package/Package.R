@@ -1,4 +1,4 @@
-# RConcerto Package
+# rweb Package
 # concerto <- list(db=list(name="concerto4_13"), sessionID=321, userIP="34.2.3.4.564")
 # concerto.table.query <- function(sql) print(paste0("sql=",sql))
 phi <- (5/2)^.5 # The Golden Ratio
@@ -128,7 +128,7 @@ tag$list(c('h1', 'li', 'head', 'comment'), 'test')
 # CSS Objects
 css.get <- function(x) {
   getURL(
-    pf("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/CSS/%s.css",
+    pf("https://raw.githubusercontent.com/EconometricsBySimulation/rweb/master/CSS/%s.css",
        x),
          followlocation = TRUE,
          cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
@@ -149,7 +149,7 @@ BS$cj <- function(..., title="", tags=c('center','jumbotron','container')) {
   }
 
 BS$get <- function(x)
-  getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/RConcerto/master/bootstrap/",
+  getURL(p("https://raw.githubusercontent.com/EconometricsBySimulation/rweb/master/bootstrap/",
    x,".htm"), followlocation = TRUE,
    cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 
@@ -322,7 +322,7 @@ ll <- function(...) {
   CALL
 }
 
-# graph1 <- rconcerto$bell()
+# graph1 <- rweb$bell()
 # Evaluate code directly from a dropbox file
 dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
   require(RCurl)
@@ -351,19 +351,25 @@ dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
 }
 
 
-rconcerto <- list()
+rweb <- list()
 
-# rconcerto Objects
+# rweb Objects
 # A function for easily returning concerto default values to the screen.
-rconcerto$show <- function(x=concerto)
+rweb$disp <- function(x=concerto)
   concerto.template.show(HTML=html.button(text=p(pn(as.list(match.call())),
                                                      capture.output(x),"<br>" ,collapse="")))
-                                                     
+
+rweb$html <- function(html, ...) {
+  r0 <- concerto.template.show(HTML=html, ...)
+  r0$LPB <- r0$LAST_PRESSED_BUTTON_NAME
+  r0$OT  <- r0$OUT_OF_TIME
+  r0
+
 # A function for creating a permenent HTML document for showing (mostly used for facebook share)
-rconcerto$template.write <- function(template, param=list(), tag="") {
+rweb$template.write <- function(template, param=list(), tag="") {
   HTMLtemp <- concerto.template.get(template) # Read the template HTML information
   HTMLtemp <- concerto.template.fillHTML(HTMLtemp, param) # Replace parameter information
-  html.targ <- rconcerto$targ(paste0(tag,template,".HTML"))
+  html.targ <- rweb$targ(paste0(tag,template,".HTML"))
   fileConn<-file(html.targ[1]) # Open a connection to a write file
   writeLines(HTMLtemp, fileConn) # Write HTML to file
   close(fileConn) # Close file
@@ -371,11 +377,11 @@ rconcerto$template.write <- function(template, param=list(), tag="") {
 }
 
 # Define a function to easily and uniquely generate file save locations.
-rconcerto$targ <- function(name="",sep=".")
+rweb$targ <- function(name="",sep=".")
   paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
 
 # A wrapper for inserting values into a MySQL table.
-rconcerto$tinsert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
+rweb$tinsert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
   command <- sprintf("INSERT INTO `%s`.`%s` SET ", dbname, table)
   # As default, save the user IP and the sessionID
   if (IP) param$userIP=concerto$userIP
@@ -387,7 +393,7 @@ rconcerto$tinsert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T,
 }
 
 # A wrapper for inserting values into a MySQL table.
-rconcerto$Update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name ) {
+rweb$update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name ) {
   Update <- pf("UPDATE `%s`.`%s` SET", dbname, table)
   Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
   Where <- p("WHERE ", p(pf("`%s`='%s'", names(cond), cond), collapse=','))
@@ -395,14 +401,14 @@ rconcerto$Update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name
 }
 
 # A wrapper for selecting (loading values from) a my SQL table.
-rconcerto$tselect <- function(table, order="", dbname=concerto$db$name) {
+rweb$tselect <- function(table, order="", dbname=concerto$db$name) {
   command <- sprintf("SELECT * FROM `%s`.`%s`", dbname, table)
   if (order!="") order <- sprintf(" ORDER BY `%s` ASC", order)
   concerto.table.query(sql=paste0(command, order))
 }
 
 # Function. Set dummy parameters for test running concerto code on the desktop R package.
-rconcerto$dummy <- function() {
+rweb$dummy <- function() {
   # I am going to declare global objects that simulate the concerto objects.
   concerto <<- list(
     testID=1,
@@ -416,12 +422,12 @@ rconcerto$dummy <- function() {
     mediaURL = "http://concerto4.e-psychometrics.com/media/3/",
     db=list(connection="<MySQLConnection:(1234,0)>",
             name="concerto4_3"))
-  rconcerto$template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
+  rweb$template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
 }
 
-# rconcerto$dummy()
+# rweb$dummy()
 # Generate a
-rconcerto$bell <- function(
+rweb$bell <- function(
   thetahat=-.25, # Default is about 43%
   targ=paste(sample(letters, 10, replace=T), collapse=""), # Generate a random letter string
   saveplot=T, # Save the plot is standard
@@ -430,7 +436,7 @@ rconcerto$bell <- function(
   main="You scored better than %s%% of those taking this test.") {
   # If plot is enabled plot open a dev.
   if (saveplot) {
-    save_target <- rconcerto$targ(paste0(name=targ, ".png"))
+    save_target <- rweb$targ(paste0(name=targ, ".png"))
     png(file=save_target[1], width = width, height = width/phi)
     print(paste("Graph saved to", save_target[2]))
   }
@@ -459,7 +465,7 @@ rconcerto$bell <- function(
 # dropbox.eval("sh/1fjpw58gko634ye/C74hTEkknP/Demo.R")
 # This function acts much the same as concerto.template.show except that it requires 
 # one or more values from the template to be evaluated
-rconcerto$check.show <- function(template, param=list(), vcheck="", 
+rweb$check.show <- function(template, param=list(), vcheck="", 
                                  mess="Please check the box to continue.") {
   # Set these two values to be empty
   returner <- list(); usermess <- ""
