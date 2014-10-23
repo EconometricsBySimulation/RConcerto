@@ -398,25 +398,30 @@ ninja$template.write <- function(template, param=list(), tag="") {
 ninja$targ <- function(name="",sep=".")
   paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
 
-# A wrapper for inserting values into a MySQL table.
-ninja$tinsert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
-  command <- sprintf("INSERT INTO `%s`.`%s` SET ", dbname, table)
+# A command builder for inserting values into a MySQL table.
+ninja$insert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
+  command <- sprintf("INSERT INTO `%s`.`%s` SET", dbname, table)
   # As default, save the user IP and the sessionID
   if (IP) param$userIP=concerto$userIP
   if (ID) param$sessionID=concerto$sessionID
   if (Ver) param$version=concerto$version
-  arglist <- NULL
-  for (i in 1:length(param)) arglist[i] <- sprintf("`%s`='%s'", names(param)[i], param[i])
-  concerto.table.query(sql=paste(command, paste(arglist, collapse=",")))
+  Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
+  concerto.table.query(sql=paste(command, Set))
 }
 
-# A wrapper for inserting values into a MySQL table.
-ninja$update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name ) {
+
+# A command builder for undating values into a MySQL table.
+ninja$update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
+  # As default, save the user IP and the sessionID
+  if (IP) param$userIP=concerto$userIP
+  if (ID) param$sessionID=concerto$sessionID
+  if (Ver) param$version=concerto$version
   Update <- pf("UPDATE `%s`.`%s` SET", dbname, table)
   Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
   Where <- p("WHERE ", p(pf("`%s`='%s'", names(cond), cond), collapse=','))
   concerto.table.query(sql=paste(Update,Set,Where))
 }
+
 
 # A wrapper for selecting (loading values from) a my SQL table.
 ninja$tselect <- function(table, order="", dbname=concerto$db$name) {
@@ -428,6 +433,9 @@ ninja$tselect <- function(table, order="", dbname=concerto$db$name) {
 # Function. Set dummy parameters for test running concerto code on the desktop R package.
 ninja$dummy <- function() {
   # I am going to declare global objects that simulate the concerto objects.
+  concerto.template.show <<- function(template, param=NULL) print(paste0("Template Show:", template))
+  concerto.table.query   <<- function(sql) print(paste0("SQL:", sql))
+  
   concerto <<- list(
     testID=1,
     sessionID=2021,
@@ -440,7 +448,6 @@ ninja$dummy <- function() {
     mediaURL = "http://concerto4.e-psychometrics.com/media/3/",
     db=list(connection="<MySQLConnection:(1234,0)>",
             name="concerto4_3"))
-  ninja$template.show <<- function(template, param=NULL) print(paste("Template Show:", template))
 }
 
 # ninja$dummy()
