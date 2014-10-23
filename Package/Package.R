@@ -448,6 +448,14 @@ ninja$dummy <- function() {
             name="concerto4_3"))
 }
 
+# Substitute default values when empty
+ninja$dsub <- function(x, y, con='') {
+    yn <- names(y)
+    tf <- !sapply(x[yn], is.null)&(x[yn]==con)
+    x[yn[tf]] <- y[tf]
+  x
+}
+
 # ninja$dummy()
 # Generate a
 ninja$bell <- function(
