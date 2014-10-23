@@ -352,8 +352,9 @@ rconcerto <- list()
 # rconcerto Objects
 # A function for easily returning concerto default values to the screen.
 rconcerto$show <- function(x=concerto)
-  concerto.template.show(HTML=html.button(text=p(as.list(match.call()), paste(pn(as.list(match.call())),
+  concerto.template.show(HTML=html.button(text=p(pn(as.list(match.call())),
                                                      capture.output(x),"<br>" ,collapse="")))
+                                                     
 # A function for creating a permenent HTML document for showing (mostly used for facebook share)
 rconcerto$template.write <- function(template, param=list(), tag="") {
   HTMLtemp <- concerto.template.get(template) # Read the template HTML information
