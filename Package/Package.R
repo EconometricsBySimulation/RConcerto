@@ -350,6 +350,39 @@ dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
   if (!no_return) return(intext)
 }
 
+sql <- list()
+
+# A command builder for inserting values into a MySQL table.
+sql$insert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
+  command <- sprintf("INSERT INTO `%s`.`%s` SET", dbname, table)
+  # As default, save the user IP and the sessionID
+  if (IP) param$userIP=concerto$userIP
+  if (ID) param$sessionID=concerto$sessionID
+  if (Ver) param$version=concerto$version
+  Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
+  concerto.table.query(sql=paste(command, Set))
+}
+
+
+# A command builder for undating values into a MySQL table.
+sql$update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
+  # As default, save the user IP and the sessionID
+  if (IP) param$userIP=concerto$userIP
+  if (ID) param$sessionID=concerto$sessionID
+  if (Ver) param$version=concerto$version
+  Update <- pf("UPDATE `%s`.`%s` SET", dbname, table)
+  Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
+  Where <- p("WHERE ", p(pf("`%s`='%s'", names(cond), cond), collapse=','))
+  concerto.table.query(sql=paste(Update,Set,Where))
+}
+
+
+# A wrapper for selecting (loading values from) a my SQL table.
+sql$select <- function(table, order="", dbname=concerto$db$name) {
+  command <- sprintf("SELECT * FROM `%s`.`%s`", dbname, table)
+  if (order!="") order <- sprintf(" ORDER BY `%s` ASC", order)
+  concerto.table.query(sql=paste0(command, order))
+}
 
 ninja <- list()
 
@@ -397,38 +430,6 @@ ninja$template.write <- function(template, param=list(), tag="") {
 # Define a function to easily and uniquely generate file save locations.
 ninja$targ <- function(name="",sep=".")
   paste(c(concerto$mediaPath,concerto$mediaURL),concerto$testID,concerto$sessionID,name,sep=sep)
-
-# A command builder for inserting values into a MySQL table.
-ninja$insert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
-  command <- sprintf("INSERT INTO `%s`.`%s` SET", dbname, table)
-  # As default, save the user IP and the sessionID
-  if (IP) param$userIP=concerto$userIP
-  if (ID) param$sessionID=concerto$sessionID
-  if (Ver) param$version=concerto$version
-  Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
-  concerto.table.query(sql=paste(command, Set))
-}
-
-
-# A command builder for undating values into a MySQL table.
-ninja$update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name, IP=T, ID=T, Ver=T) {
-  # As default, save the user IP and the sessionID
-  if (IP) param$userIP=concerto$userIP
-  if (ID) param$sessionID=concerto$sessionID
-  if (Ver) param$version=concerto$version
-  Update <- pf("UPDATE `%s`.`%s` SET", dbname, table)
-  Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
-  Where <- p("WHERE ", p(pf("`%s`='%s'", names(cond), cond), collapse=','))
-  concerto.table.query(sql=paste(Update,Set,Where))
-}
-
-
-# A wrapper for selecting (loading values from) a my SQL table.
-ninja$tselect <- function(table, order="", dbname=concerto$db$name) {
-  command <- sprintf("SELECT * FROM `%s`.`%s`", dbname, table)
-  if (order!="") order <- sprintf(" ORDER BY `%s` ASC", order)
-  concerto.table.query(sql=paste0(command, order))
-}
 
 # Function. Set dummy parameters for test running concerto code on the desktop R package.
 ninja$dummy <- function() {
