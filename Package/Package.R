@@ -353,7 +353,9 @@ dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
 sql <- list()
 
 # A command builder for inserting values into a MySQL table.
-sql$insert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T, verbose=F) {
+sql$insert <- function(table, param, dbname=concerto$db$name, 
+                       IP=TRUE, ID=TRUE, Ver=TRUE, verbose=FALSE, noID=TRUE) 
+{
   Insert <- sprintf("INSERT INTO `%s`.`%s` SET", dbname, table)
   # As default, save the user IP and the sessionID
   if (IP) param$userIP=concerto$userIP
@@ -369,7 +371,8 @@ sql$insert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T,
 
 # A command builder for undating values into a MySQL table.
 sql$update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name, 
-   IP=TRUE, ID=TRUE, Ver=TRUE, verbose=FALSE, noID=TRUE) {
+                       IP=TRUE, ID=TRUE, Ver=TRUE, verbose=FALSE, noID=TRUE) 
+{
   # As default, save the user IP and the sessionID
   if (IP) param$userIP=concerto$userIP
   if (ID) param$sessionID=concerto$sessionID
@@ -385,7 +388,8 @@ sql$update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name,
 
 
 # A wrapper for selecting (loading values from) a my SQL table.
-sql$select <- function(table, what="*", order="", dbname=concerto$db$name, verbose=F) {
+sql$select <- function(table, what="*", order="", dbname=concerto$db$name, verbose=F) 
+{
   Select <- sprintf("SELECT %s FROM `%s`.`%s`", what, dbname, table)
   if (order!="") order <- sprintf(" ORDER BY `%s` ASC", order)
   command <- paste(Select, order)
