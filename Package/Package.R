@@ -359,6 +359,7 @@ sql$insert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T,
   if (IP) param$userIP=concerto$userIP
   if (ID) param$sessionID=concerto$sessionID
   if (Ver) param$version=concerto$version
+  if (noID) param$id <- NULL
   Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
   command<-paste(Insert, Set)
   if (verbose) print(command)
@@ -367,11 +368,13 @@ sql$insert <- function(table, param, dbname=concerto$db$name, IP=T, ID=T, Ver=T,
 
 
 # A command builder for undating values into a MySQL table.
-sql$update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name, IP=T, ID=T, Ver=T, verbose=F) {
+sql$update <- function(table, param, cond=c(ID=1), dbname=concerto$db$name, 
+   IP=TRUE, ID=TRUE, Ver=TRUE, verbose=FALSE, noID=TRUE) {
   # As default, save the user IP and the sessionID
   if (IP) param$userIP=concerto$userIP
   if (ID) param$sessionID=concerto$sessionID
   if (Ver) param$version=concerto$version
+  if (noID) param$id <- NULL
   Update <- pf("UPDATE `%s`.`%s` SET", dbname, table)
   Set <- p(pf("`%s`='%s'", names(param), param), collapse=',')
   Where <- p("WHERE ", p(pf("`%s`='%s'", names(cond), cond), collapse=','))
