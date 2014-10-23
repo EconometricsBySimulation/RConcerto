@@ -364,7 +364,7 @@ ninja$build <- function(html, ...) {
   r0$LPB <- r0$LAST_PRESSED_BUTTON_NAME
   r0$OT  <- r0$OUT_OF_TIME
   r0$TT  <- r0$TIME_TAKEN
-  resp  
+  r0  
 }
 
 ninja$dsub <- function(x, y, con='') {
