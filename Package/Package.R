@@ -193,7 +193,9 @@ BS$header <- function(...) tag$header(tag$h1(...))
 
 # Create a textual input object. Left and right addons will cause the input box to span entire width
 # as well as create textual clues.
-BS$Tinput <- function(name, placeholder, type='text', left.addon=NULL, right.addon=NULL){
+BS$Tinput <- function(name, placeholder, type='text', 
+  left.addon=NULL, left.button=NULL, right.addon=NULL, right.button=NULL)
+{
   left <- right <- p('')
   if (length(left.button)>0) 
     left <- left + pf('<span class="input-group-btn">%s</span>\n', left.button)
@@ -208,7 +210,9 @@ BS$Tinput <- function(name, placeholder, type='text', left.addon=NULL, right.add
   pf('<div class="input-group">\n%s\n</div>\n',left+center+right)
 }
 
-BS$Ttext <- function(x, type='text', left.addon=NULL, left.button=NULL, right.addon=NULL, right.button=NULL){
+BS$Ttext <- function(x, type='text', 
+left.addon=NULL, left.button=NULL, right.addon=NULL, right.button=NULL)
+{
   left <- right <- p('')
   if (length(left.button)>0) 
     left <- left + pf('<span class="input-group-btn">%s</span>\n', left.button)
