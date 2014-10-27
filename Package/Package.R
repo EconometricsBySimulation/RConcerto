@@ -112,6 +112,15 @@ tag$li <- function(..., active=FALSE) {
   if (!active) return(pf('<li>%s</li>', list(...)))
   pf('<li class="active">%s</li>', list(...))
 }
+# Create a radio button
+tag$radio
+function(name, value, text='', checked = '', collapse='')
+{
+  check <- rep('', length(value))
+  check[value==checked] <- 'checked'
+  p(pf('<input type="radio" name="%s" value="%s" %s>%s<br>', 
+       name, value, check, text), collapse=collapse)
+}
 
 tag$list      <- function(tags, ..., verbose=FALSE) {
   # Set verbose=TRUE to check if individual tags are having issues.
