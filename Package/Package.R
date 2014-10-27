@@ -113,9 +113,7 @@ tag$li <- function(..., active=FALSE) {
   pf('<li class="active">%s</li>', list(...))
 }
 # Create a radio button
-tag$radio
-function(name, value, text='', checked = '', collapse='')
-{
+tag$radio <- function(name, value, text='', checked = '', collapse='') {
   check <- rep('', length(value))
   check[value==checked] <- 'checked'
   p(pf('<input type="radio" name="%s" value="%s" %s>%s<br>', 
