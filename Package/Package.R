@@ -157,6 +157,15 @@ BS$glyph <- function(x) pf('<span class="glyphicon glyphicon-%s"></span>', x)
 
 BS$head <- function() tag$head(pc(tag$css(BS$SS$min.css, BS$SS$theme.min.css, BS$SS$css2, BS$SS$css3)))+'\n\n'
 
+BS$radio <- function(name, value, disp) {
+  if (length(value)!=length(disp)) 
+    warning('value and display should be equally long')
+  ret <- p('')
+  for (i in 1:length(value)) 
+    ret <- ret + BS$Ttext(disp[i], left.addon=tag$radio(name, value[i]))
+  ret
+}
+
 BS$source <- function(theme='default') {
   min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
   theme.min.css <- "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"
