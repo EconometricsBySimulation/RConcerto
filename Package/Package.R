@@ -208,6 +208,13 @@ BS$button <-
 
 BS$header <- function(...) tag$header(tag$h1(...))
 
+BS$progbar <- function(value=50, type='success', text='', striped=FALSE){
+  stripe <- ''
+  if (striped) stripe <- ' progress-bar-striped'
+  p('<div class="progress">\n') +
+  pf('<div class="progress-bar progress-bar-%s%s" role="progressbar" aria-valuenow="%s" aria-valuemin="0" aria-valuemax="100" style="width: %s%%">', type, stripe, value, value)+
+  p(text)+p('\n</div>\n</div>')
+}
 
 # Create a textual input object. Left and right addons will cause the input box to span entire width
 # as well as create textual clues.
