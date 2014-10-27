@@ -158,11 +158,13 @@ BS$glyph <- function(x) pf('<span class="glyphicon glyphicon-%s"></span>', x)
 BS$head <- function() tag$head(pc(tag$css(BS$SS$min.css, BS$SS$theme.min.css, BS$SS$css2, BS$SS$css3)))+'\n\n'
 
 BS$radio <- function(name, value, disp, checked='') {
+  if (length(checked)==0) checked=''
   if (length(value)!=length(disp)) 
     warning('value and display should be equally long')
   ret <- p('')
   for (i in 1:length(value)) 
-    ret <- ret + BS$Ttext(disp[i], left.addon=tag$radio(name, value[i], checked=checked))
+    ret <- ret + 
+      BS$Ttext(disp[i], left.addon=tag$radio(name, value[i], checked=checked))
   ret
 }
 
