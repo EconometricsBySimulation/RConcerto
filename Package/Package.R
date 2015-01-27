@@ -430,8 +430,8 @@ ninja$disp <- function(x=concerto)
   concerto.template.show(HTML=html.button(text=p(pn(as.list(match.call())),
                                                      capture.output(x),"<br>" ,collapse="")))
 
-ninja$build <- function(html, ...) {
-  r0 <- concerto.template.show(HTML=html, ...)
+ninja$build <- function(...) {
+  r0 <- concerto.template.show(...)
   r0$LPB <- r0$LAST_PRESSED_BUTTON_NAME
   r0$OT  <- r0$OUT_OF_TIME
   r0$TT  <- r0$TIME_TAKEN
