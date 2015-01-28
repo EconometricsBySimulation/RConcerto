@@ -526,7 +526,7 @@ ninja$check.show <- function(template, param=list(), vcheck="",
   # Set these two values to be empty
   returner <- list(); usermess <- ""
   # This provides an infinite loop until the user satisfies the condition of the check box being clicked.
-  while (is.null(returner[[vcheck]])) {
+  while (any(is.null(returner[[vcheck]]))) {
     returner <- concerto.template.show(template,
                                        param=c(param, vcheck=usermess))
     # Send the user the need to check the box message.
