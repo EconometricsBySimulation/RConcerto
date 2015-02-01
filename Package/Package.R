@@ -134,6 +134,8 @@ tag$list      <- function(tags, ..., verbose=FALSE) {
   ret
 }
 
+tag$input   
+
 tag$list(c('h1', 'li', 'head', 'comment'), 'test')
 
 # CSS Objects
