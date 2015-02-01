@@ -170,7 +170,7 @@ BS$radio <- function(name, value, disp, checked='') {
     warning('value and display should be equally long')
   ret <- p('')
   for (i in 1:length(value)) 
-    ret <- ret + 
+    ret <- ret & 
       BS$Ttext(disp[i], left.addon=tag$radio(name, value[i], checked=checked))
   ret
 }
