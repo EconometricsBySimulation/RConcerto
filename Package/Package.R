@@ -56,22 +56,26 @@ nl <- function(...) {
   setNames(L,nm)
 };
 
+
 # HTML Objects
 # HTML drop down menu object that return selections with the name sel_field by default.
 # Options
-html.selectfield <- function(options, rows=4, name="sel_field") {
+
+html <- list()
+
+html$selectfield <- function(options, rows=4, name="sel_field") {
   return <- sprintf("<select name=\"%s\" size=\"%i\">", name, rows)
   for (i in 1:length(options)) return=p(return, "<option value=", i,">",options[i],"</option>")
   p(return, "</select>")
 };
 
 # Highlight the text
-html.highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
+html$highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
 # Create a html button
-html.button <- function(name="btn_name", value="Submit", text="")
+html$button <- function(name="btn_name", value="Submit", text="")
   p(text,"<input name=\"", name, "\" type=\"submit\" value=\"",value,"\" />")
 # Insert an html image
-html.image <- function(targ, alt="", width="", height="", align="center") {
+html$image <- function(targ, alt="", width="", height="", align="center") {
   # Modify the the width and height strings
   if ((width!="")&(height=="")) stop("Warning: Height must be specified if width is specified!")
   if (height!="") height <- sprintf('height: %spx;',height)
@@ -116,7 +120,7 @@ tag$li <- function(..., active=FALSE) {
 tag$radio <- function(name, value, text='', checked = '', collapse='') {
   check <- rep('', length(value))
   check[value==checked] <- 'checked'
-  p(pf('<input type="radio" name="%s" value="%s" %s>%s<br>', 
+  paste(pf('<input type="radio" name="%s" value="%s" %s>%s<br>', 
        name, value, check, text), collapse=collapse)
 }
 
