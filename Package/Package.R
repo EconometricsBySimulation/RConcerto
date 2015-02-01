@@ -120,7 +120,7 @@ tag$li <- function(..., active=FALSE) {
 tag$radio <- function(name, value, text='', checked = '', collapse='') {
   check <- rep('', length(value))
   check[value==checked] <- 'checked'
-  paste(pf('<input type="radio" name="%s" value="%s" %s>%s<br>', 
+  p(pf('<input type="radio" name="%s" value="%s" %s>%s</input>', 
        name, value, check, text), collapse=collapse)
 }
 
