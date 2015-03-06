@@ -70,7 +70,11 @@ html$selectfield <- function(options, rows=4, name="sel_field") {
 };
 
 # Highlight the text
-html$highlight <- function(text) paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
+html$highlight <- function(text) {
+  ret <- paste0("<SPAN style=\"BACKGROUND-COLOR: #ffff00\">", text,"</SPAN>")
+  class(ret) <- 'html'
+  ret
+}
 # Create a html button
 html$button <- function(name="btn_name", value="Submit", text="")
   p(text,"<input name=\"", name, "\" type=\"submit\" value=\"",value,"\" />")
@@ -536,7 +540,7 @@ ninja$check.show <- function(template, param=list(), vcheck="",
     returner <- concerto.template.show(template,
                                        param=c(param, vcheck=usermess))
     # Send the user the need to check the box message.
-    usermess <- html.highlight(mess)
+    usermess <- html$highlight(mess)
   }
   # Returns the values to the user
   returner
