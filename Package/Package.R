@@ -437,7 +437,7 @@ ninja <- list()
 # ninja Objects
 # A function for easily returning concerto default values to the screen.
 ninja$disp <- function(x=concerto)
-  concerto.template.show(HTML=html.button(text=p(pn(as.list(match.call())),
+  concerto.template.show(HTML=html$button(text=p(pn(as.list(match.call())),
                                                      capture.output(x),"<br>" ,collapse="")))
 
 ninja$build <- function(...) {
