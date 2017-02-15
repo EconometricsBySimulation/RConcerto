@@ -114,7 +114,10 @@ tag$container <- function(...) p('<div class="container">', ..., '</div>')
 tag$jumbotron <- function(...) p('<div class="jumbotron">', ..., '</div>')
 tag$none      <- function(...) p(...)
 tag$header    <- function(...) p('<div class="page-header">', ... , '</div>')
-tag$a         <- function(x, href) pf('<a href="%s">%s</a>', href, x)
+tag$a         <- function(x, href, target="") {
+  if (target=="") pf('<a href="%s">%s</a>', href, x)
+  if (target=="") pf('<a href="%s" target="%s">%s</a>', href, target, x)
+}
 tag$row       <- function(...) p('<div class="row">\n', pn(...) ,'</div><!--End Row-->\n')
 tag$col       <- function(..., size=4) pf('<div class="col-sm-%s">\n%s</div><!--End Col-->\n', size, pn(...)) 
 tag$li <- function(..., active=FALSE) {
