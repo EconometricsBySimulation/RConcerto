@@ -90,7 +90,7 @@ html$image <- function(targ, alt="", width="", height="", align="center") {
 # HTML tags
 tag <- list()
 tag$center    <- function(...) p("<center>",list(...),"</center>")
-tag$left      <- function(...) p("<<div align='left'>",list(...),"</div>")
+tag$left      <- function(...) p("<div align='left'>",list(...),"</div>")
 tag$style     <- function(...) p('<style type="text/css">',list(...),"</style>")
 tag$h1        <- function(...) p("<h1>",list(...),"</h1>")
 tag$h2        <- function(...) p("<h2>",list(...),"</h2>")
