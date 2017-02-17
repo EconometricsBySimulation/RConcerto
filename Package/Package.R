@@ -498,6 +498,14 @@ ninja$dsub <- function(x, y, con='') {
   x
 }
 
+# Do not replace values if replacement is empty
+ninja$isub <- function(x, y, con='') {
+    yn <- names(y)
+    tf <- (y[yn]!=con)
+    x[yn[tf]] <- y[tf]
+  x
+}
+
 # ninja$dummy()
 # Generate a
 ninja$bell <- function(
