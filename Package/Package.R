@@ -511,9 +511,6 @@ ninja$isub <- function(x, y, d, con='') {
     yn <- names(y)  # Recover names of y
     tf <- (y[yn]!=con) # Check if y values are empty. 
     x[yn[tf]] <- y[tf] # If not replace
-    dn <- names(d) # Recover default names
-    tf <- x[dn]==d[dn]
-    x[tf] <- NULL
   x
 }
 
