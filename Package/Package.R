@@ -87,7 +87,7 @@ html$image <- function(targ, alt="", width="", height="", align="center", dropbo
   if (height!="") height <- sprintf('height: %spx;',height)
   if (width!="") width <- sprintf('width: %spx;',width)
   # Use sprintf to piece together the html command
-  pf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" />',align, alt, targ, width, height)
+  pf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" /></p>',align, alt, targ, width, height)
 }
     
 # HTML tags
