@@ -81,7 +81,7 @@ html$button <- function(name="btn_name", value="Submit", text="")
 # Insert an html image
 html$image <- function(targ, alt="", width="", height="", align="center", dropbox=FALSE) {
   # Modify the the width and height strings
-  if (dropbox) paste0('https://www.dropbox.com/s/'
+  if (dropbox) targ <- paste0('https://dl.dropboxusercontent.com/s/', targ)
   if ((width!="")&(height=="")) stop("Warning: Height must be specified if width is specified!")
   if (height!="") height <- sprintf('height: %spx;',height)
   if (width!="") width <- sprintf('width: %spx;',width)
