@@ -497,6 +497,14 @@ ninja$dsub <- function(x, y, con='') {
     x[yn[tf]] <- y[tf] # Sub out missing or empty values with y values
   x
 }
+    
+# Drop default values
+ninja$ddrop <- function(x, y, con='') {
+    yn <- names(y) 
+    tf <- x[yn]==y[yn] # Check if x values are missing or empty. If so, replace
+    x[yn[tf]] <- NULL # Sub out missing or empty values with y values
+  x
+}
 
 # Do not replace values if replacement is empty
 ninja$isub <- function(x, y, con='') {
