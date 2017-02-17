@@ -234,7 +234,7 @@ BS$progbar <- function(value=50, type='success', text='', striped=FALSE){
 
 # Create a textual input object. Left and right addons will cause the input box to span entire width
 # as well as create textual clues.
-BS$Tinput <- function(name, placeholder, type='text', 
+BS$Tinput <- function(name, placeholder="", value="", type='text', 
   left.addon=NULL, left.button=NULL, right.addon=NULL, right.button=NULL)
 {
   left <- right <- p('')
@@ -246,8 +246,8 @@ BS$Tinput <- function(name, placeholder, type='text',
     right <- right + pf('<span class="input-group-addon">%s</span>\n', right.addon)
   if (length(right.button)>0) 
     right <- right + pf('<span class="input-group-btn">%s</span>\n', right.button)
-  center <- pf('<input name="%s" type="%s" class="form-control" placeholder="%s">', 
-               name, type, placeholder)
+  center <- pf('<input name="%s" type="%s" class="form-control" placeholder="%s" value="%s">', 
+               name, type, placeholder, value)
   pf('<div class="input-group">\n%s\n</div>\n',left+center+right)
 }
 
