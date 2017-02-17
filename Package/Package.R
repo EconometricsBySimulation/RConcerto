@@ -80,14 +80,14 @@ html$button <- function(name="btn_name", value="Submit", text="")
   p(text,"<input name=\"", name, "\" type=\"submit\" value=\"",value,"\" />")
   
 # Insert an html image
-html$image <- function(targ, alt="", width="", height="", align="center", dropbox=FALSE) {
+html$image <- function(targ, alt="", width="", height="", dropbox=FALSE) {
   # Modify the the width and height strings
   if (dropbox) targ <- paste0('https://dl.dropboxusercontent.com/s/', targ)
   if ((width!="")&(height=="")) stop("Warning: Height must be specified if width is specified!")
   if (height!="") height <- sprintf('height: %spx;',height)
   if (width!="") width <- sprintf('width: %spx;',width)
   # Use sprintf to piece together the html command
-  pf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" /></p>',align, alt, targ, width, height)
+  pf('<img alt="%s" src="%s" style="%s %s" />', alt, targ, width, height)
 }
     
 # HTML tags
@@ -368,7 +368,7 @@ ll <- function(...) {
 dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
   require(RCurl)
   # Load the file into memory as a text file with getURL
-  intext <- getURL(paste0("https://dl.dropboxusercontent.com/",x),
+  intext <- getURL(paste0("https://dl.dropboxusercontent.com/s/",x),
                    ssl.verifypeer = FALSE)
   # For some reason \r seem to be frequently inserted into
   # the script files that I save. They present a problem
