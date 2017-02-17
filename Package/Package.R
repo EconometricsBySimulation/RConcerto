@@ -492,17 +492,17 @@ ninja$dummy <- function() {
 
 # Substitute default values when empty
 ninja$dsub <- function(x, y, con='') {
-    yn <- names(y)
-    tf <- !sapply(x[yn], is.null)&(x[yn]==con)
-    x[yn[tf]] <- y[tf]
+    yn <- names(y) # Recover names of y
+    tf <- sapply(x[yn], is.null)|(x[yn]==con) # Check if x values are missing or empty. If so, replace
+    x[yn[tf]] <- y[tf] # Sub out missing or empty values with y values
   x
 }
 
 # Do not replace values if replacement is empty
 ninja$isub <- function(x, y, con='') {
-    yn <- names(y)
-    tf <- (y[yn]!=con)
-    x[yn[tf]] <- y[tf]
+    yn <- names(y)  # Recover names of y
+    tf <- (y[yn]!=con) # Check if y values are empty. 
+    x[yn[tf]] <- y[tf] # If not replace
   x
 }
 
