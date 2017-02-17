@@ -78,6 +78,7 @@ html$highlight <- function(text) {
 # Create a html button
 html$button <- function(name="btn_name", value="Submit", text="")
   p(text,"<input name=\"", name, "\" type=\"submit\" value=\"",value,"\" />")
+  
 # Insert an html image
 html$image <- function(targ, alt="", width="", height="", align="center", dropbox=FALSE) {
   # Modify the the width and height strings
@@ -86,8 +87,9 @@ html$image <- function(targ, alt="", width="", height="", align="center", dropbo
   if (height!="") height <- sprintf('height: %spx;',height)
   if (width!="") width <- sprintf('width: %spx;',width)
   # Use sprintf to piece together the html command
-  sprintf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" />',align, alt, targ, width, height)
+  pf('<p style="text-align: %s;"><img alt="%s" src="%s" style="%s %s" />',align, alt, targ, width, height)
 }
+    
 # HTML tags
 tag <- list()
 tag$center    <- function(...) p("<center>",list(...),"</center>")
@@ -143,8 +145,6 @@ tag$list      <- function(tags, ..., verbose=FALSE) {
   }
   ret
 }
-
-tag$input   
 
 tag$list(c('h1', 'li', 'head', 'comment'), 'test')
 
