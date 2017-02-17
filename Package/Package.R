@@ -79,8 +79,9 @@ html$highlight <- function(text) {
 html$button <- function(name="btn_name", value="Submit", text="")
   p(text,"<input name=\"", name, "\" type=\"submit\" value=\"",value,"\" />")
 # Insert an html image
-html$image <- function(targ, alt="", width="", height="", align="center") {
+html$image <- function(targ, alt="", width="", height="", align="center", dropbox=FALSE) {
   # Modify the the width and height strings
+  if (dropbox) paste0('https://www.dropbox.com/s/'
   if ((width!="")&(height=="")) stop("Warning: Height must be specified if width is specified!")
   if (height!="") height <- sprintf('height: %spx;',height)
   if (width!="") width <- sprintf('width: %spx;',width)
@@ -389,7 +390,7 @@ dropbox.eval <- function(x, noeval=F, printme=F, split=";", no_return=T) {
   # Finally return the dropbox script as text.
   if (!no_return) return(intext)
 }
-
+    
 sql <- list()
 
 # A command builder for inserting values into a MySQL table.
@@ -436,8 +437,6 @@ sql$select <- function(table, what="*", order="", dbname=concerto$db$name, verbo
   if (verbose) print(command)
   concerto.table.query(sql=command)
 }
-
-ninja <- list()
 
 # ninja Objects
 # A function for easily returning concerto default values to the screen.
