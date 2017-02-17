@@ -439,6 +439,9 @@ sql$select <- function(table, what="*", order="", dbname=concerto$db$name, verbo
 }
 
 # ninja Objects
+    
+ninja <- list()
+    
 # A function for easily returning concerto default values to the screen.
 ninja$disp <- function(x=concerto)
   concerto.template.show(HTML=html$button(text=p(pn(as.list(match.call())),
