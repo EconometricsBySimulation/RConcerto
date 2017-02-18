@@ -111,10 +111,7 @@ tag$pn         <- function(..., align='') {
   if (align=='')  pn(pf('<p>%s</p>', list(...)))
 }
 tag$head      <- function(...) p("<head>", ..., "</head>")
-tag$css       <- function(targ, dropbox=FALSE) {
-  if (!dropbox) return(p('<link rel="stylesheet" href="', targ, '">'))
-  if (dropbox) return(p('<link rel="stylesheet" href="https://dl.dropboxusercontent.com/s/', targ, '">'))
-}  
+tag$css       <- function(...) p('<link rel="stylesheet" href="', ..., '">')
 tag$script    <- function(..., scr='') p('<script src="%s">%s</script>',scr,...)
 tag$comment   <- function(...) p('<!-- ', ..., ' -->')
 tag$container <- function(...) p('<div class="container">', ..., '</div>')
@@ -365,6 +362,8 @@ ll <- function(...) {
   for (i in 1:length(no.name)) if (no.name[i]==T) try(CALL[[i]] <- get(toString(CALL[i])))
   CALL
 }
+    
+dropboxcss       <- function(...) p('<link rel="stylesheet" href="https://dl.dropboxusercontent.com/s/', ..., '">')
 
 # graph1 <- ninja$bell()
 # Evaluate code directly from a dropbox file
