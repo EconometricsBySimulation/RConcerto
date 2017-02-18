@@ -363,7 +363,7 @@ ll <- function(...) {
   CALL
 }
     
-dropboxcss <- function(...) p('<link rel="stylesheet" href="https://dl.dropboxusercontent.com/s/', ..., '">')
+dropboxcss <- function(...) p('<link rel="stylesheet" href="https://dl.dropboxusercontent.com/s/', list(...), '">')
 
 # graph1 <- ninja$bell()
 # Evaluate code directly from a dropbox file
