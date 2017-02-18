@@ -111,7 +111,10 @@ tag$pn         <- function(..., align='') {
   if (align=='')  pn(pf('<p>%s</p>', list(...)))
 }
 tag$head      <- function(...) p("<head>", ..., "</head>")
-tag$css       <- function(...) p('<link rel="stylesheet" href="', list(...), '">')
+tag$css       <- function(..., dropbox=FALSE) {
+  if (!dropbox) return(p('<link rel="stylesheet" href="', list(...), '">'))
+  if (dropbox) return(p('<link rel="stylesheet" href="https://dl.dropboxusercontent.com/s/', list(...), '">'))
+}  
 tag$script    <- function(..., scr='') p('<script src="%s">%s</script>',scr,...)
 tag$comment   <- function(...) p('<!-- ', ..., ' -->')
 tag$container <- function(...) p('<div class="container">', ..., '</div>')
